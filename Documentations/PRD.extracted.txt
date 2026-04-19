@@ -1,0 +1,379 @@
+﻿
+
+
+    
+    
+    
+    
+    iTECHS PWA Gamified Learning Game PRD
+
+    
+    Evidence base and design reference analysis
+
+    This PRD synthesizes (a) your finalized product decisions (roles, 20 fixed levels, 3 mini-games, stars-based outcomes, admin-created accounts, teacher oversight), (b) the four capstone documents in your Drive (context, approved scope/modules, rubric, and progress report), and (c) your attached UI reference images that establish the pixel-art “game menu” presentation.
+
+    The official capstone documentation frames iTECHS as “a gamified e-learning platform” for ICT students at Pasay City South High School, designed to reduce manual checking/recording/feedback delays by centralizing learning progress and adding game-based learning activities. [1] [2]The approved scope enumerates key modules for the web app: login/credential verification, role-based access control, user management CRUD, game-based assessment with automatic question generation, progress tracking, feedback, and AI-assisted hints that guide without giving final answers. [2] [3]Your grading rubric explicitly expects secure authentication (password hashing), authorization (role-based access), CRUD + validation, OTP verification, search/filter, encryption/hashing, and logging/monitoring of critical actions. [4]
+
+    Your UI references imply a consistent pixel-art “RPG menu” paradigm: large icon-buttons on a scenic background, modal “panels” for forms/tables, an avatar portrait with name/role, and a landscape-first layout (desktop and mobile). The screens also imply the “level select” star rating model and profile cosmetics shop behavior you described.
+
+    UI style references collage
+
+    Because this is a Progressive Web App with responsive landscape UI, the design workflow should rely heavily on responsive layout systems in your design tool. Figma’s Auto Layout is explicitly intended to make designs “responsive and adaptable,” automatically reflowing when content changes. [5]For build handoff, Figma’s UI kits and Dev Mode can accelerate consistent component creation; Figma describes UI kits as libraries of “high-quality components, styles, variables, and example screens,” and notes Code Connect as a way to bridge design components to real code components (useful for AI-assisted implementation workflows). [6]
+
+    
+    
+    Product definition
+
+    Product typeA landscape-first Progressive Web App (PWA) that delivers a single-player, level-based, 2D mini-game learning experience for ICT students of one school. (No multiplayer/live competition, consistent with the capstone delimitation that the system is self-paced and individual-focused.) [1]
+
+    Target users and rolesAdmin, Teacher, Student. [2]Accounts for teachers and students are created only by Admin (no public self-registration).
+
+    Core promiseMake ICT learning more engaging and trackable by delivering AI-generated, student-specific question sets embedded into three simple mini-game formats; provide star-based mastery signals per level, persistent scoring, and teacher/admin oversight dashboards.
+
+    Primary goals (aligned to the capstone context)The documents emphasize reducing manual overhead (checking, recording, feedback delays) and centralizing progress data while increasing engagement using gamification and interactive activities. [1]Your implementation choice (PWA) collapses “web + mobile” scope into one installable app while still achieving “web and mobile accessible” delivery described in the objectives/scope. [1] [2]
+
+    Non-goalsNo sections/year levels in the product model (students + teachers only). No real-money purchases. No competitive online matches.
+
+    
+    
+    Gameplay and progression design
+
+    
+    High-level loop
+
+    Student logs in → lands on “game menu” dashboard (pixel UI).
+
+    Student selects Level (1–20).
+
+    System launches the assigned mini-game for that level and loads that student’s pre-generated question pack for the level.
+
+    Student plays until completion (or failure if stars depleted).
+
+    System records: stars earned, score earned, mistakes, hint usage, attempts, completion timestamp.
+
+    Student receives rewards (stars as rating + separate “star currency” wallet, see Economy) and unlock progress.
+
+    This matches the platform’s intended “game-based assessment” and immediate feedback model, where students complete gamified tasks and receive instant results and progress tracking. [2] [3]
+
+    
+    
+    Level structure and unlocking
+
+    Fixed levels: 20 total levels per student (MVP).Unlocking: Level 1 unlocked at start; Level N unlocks when Level N-1 is completed with ≥1 star.
+
+    Stars per level (mastery rating): 0–3Your rule set is implemented as:
+
+    Start each level at 3 stars.
+
+    Student has 3 “free mistakes”.
+
+    If mistakes > 3, star loss due to mistakes is: mistakeStarLoss = (mistakes - 3) capped to remaining stars.
+
+    Each hint immediately reduces stars by 1 upon use (even if free mistakes remain).
+
+    A level is failed if stars reach 0 before completion (or ends with 0).
+
+    This fits your constraint that “getting a hint immediately reduces the star by 1,” and that additional mistakes reduce star rating and can cause a loss condition when depleted.
+
+    
+    
+    Score model
+
+    You specified that correctness drives scoring (not speed/streak). Score exists alongside stars (stars are per-level mastery; score is an overall performance metric).
+
+    Recommended implementation:
+
+    Each level has a baseMaxScore (e.g., 100).
+
+    When a student re-attempts a level, reduce the maximum achievable score for that level, but never reduce already-earned score history. This matches your requirement that retries reduce the score they can gain on that level, without subtracting score already gained so far.
+
+    A simple approach that is easy to explain to students:
+
+    Attempt 1: maxScoreMultiplier = 1.0
+
+    Attempt 2: 0.9
+
+    Attempt 3: 0.8
+
+    … capped at a floor (e.g., 0.5)
+
+    Final awarded score for that attempt: scoreAwarded = round(rawCorrectnessScore * maxScoreMultiplier)
+
+    
+    
+    Mini-game portfolio and assignment rules
+
+    You defined 3 mini-games (expandable later), each with consistent mechanics while questions become harder.
+
+    Game A: Hardware Parts Matching (Desktop Setup)A drag-and-drop matching game: labels (or scrambled labels) to external hardware items (monitor, keyboard, mouse, speaker, microphone, headphones, printer, system unit, etc.). This corresponds to the “Hardware Parts” UI reference screen’s instruction style and hint button placement.
+
+    Game B: CPU / Internal Hardware AssemblingA structured drag-and-drop assembly simulation: placing internal parts (RAM, GPU, storage, cooling, CPU-related parts) into correct slots/locations.
+
+    Game C: Jigsaw Puzzle – Software ApplicationsA jigsaw puzzle that reveals a software icon/interface/clue; after puzzle completion, student answers an identification question set linked to the revealed image.
+
+    Game assignment rule (your constraint):- Each pair of levels (1–2, 3–4, …, 19–20) uses a randomly selected game among the three.- The same game cannot appear consecutively (no repeats between adjacent level-pairs).- Over 20 levels, ensure reasonable coverage (avoid one game dominating due to random chance). Implement as “shuffle-bag” selection per student: a small pool that must cycle before repeats.
+
+    
+    
+    Question types and content coverage
+
+    Your content scope is “ICT problems including hardware and software,” and question types are mixed but “majority identification.”
+
+    Operationally, each level’s “question pack” should be a mix of:
+
+    Identification (primary)
+
+    Multiple choice (useful when visuals are fixed but distractors are needed)
+
+    Matching (pairs; especially for terminology)
+
+    Sequencing / ordering (lightweight; fits “process” knowledge)
+
+    Scenario-based short prompts (teacher reviewable; still scored by correctness)
+
+    To keep the games feasible: visuals should be asset-library-driven (curated images/positions), while AI generates text prompts, labels, distractors, and explanations consistent with those assets.
+
+    
+    
+    
+    Role-based features and functional requirements
+
+    This section translates your decisions + the approved module list into implementable requirements.
+
+    
+    Authentication, verification, and access control
+
+    The capstone documents require secure login, OTP verification, and role-based access control. [2] [4]
+
+    Account creation (Admin-only) - Admin creates Teacher and Student accounts. - System sends an “account activation” email flow (OTP-based verification) before the user can fully access gameplay/dashboard features. - OTP validity: 10 minutes (as described in the progress report). [3]
+
+    Login protections - Lock account after 5 failed login attempts for 10 minutes (captured in the progress report). [3] - Passwords stored with strong hashing (rubric requirement). [4] - Role-based routing: Admin → Admin menu; Teacher → Teacher dashboard; Student → Level/game menu (role-based access is explicitly described). [3]
+
+    Authorization - RBAC enforced server-side on every endpoint (Admin-only user creation, Teacher-only student roster views, Student-only gameplay submission). - Audit log of security-critical events (login attempts, lockouts, OTP validation, role changes), aligned with the rubric’s logging/monitoring criteria. [4]
+
+    
+    
+    AI-generated content lifecycle
+
+    The approved scope calls for automatic generation of varied questions and AI-assisted hints/guidance. [2] [3]Your rule set is more specific:
+
+    When a new Student account is created, the system auto-generates questions for all 20 levels, stores them, and binds them to that student permanently (unless regenerated by policy).
+
+    Generation workflow (recommended) - Upon student creation: - Create StudentProvisioningJob records for Level 1–20. - Generate each level’s game assignment (pair-based) first, so the AI prompt knows the game mode and asset constraints. - Generate questions in batches with retries and validation. - Mark each level pack as READY or FAILED_GENERATION (admin can rerun).
+
+    Teacher oversight You said teachers cannot edit lessons/questions, but can “review, edit star points, difficulty, etc.”Implement this as teacher controls over: - Difficulty curve parameters per assigned student (e.g., “easy/standard/hard” multiplier that affects future regeneration and/or grading thresholds). - Level overrides (e.g., allow +1 extra free mistake for a struggling student, or adjust maximum retry count), if permitted. - Flagging a question pack as invalid and requesting regeneration (without direct editing).
+
+    
+    
+    Student experience requirements
+
+    Core screens (MVP) - Login / OTP verification - Student game menu dashboard (pixel UI) - Select Level (1–20) with lock/unlock and star indicators (matches reference UI) - Game runtime screens (3 game modes + shared HUD) - Results screen (stars earned, score earned, corrections/explanations) - Profile cosmetics screen (hair/eyes/mouth/frames/etc.) - Leaderboard (teacher roster leaderboard + admin global)
+
+    Feedback and evaluation Immediate correctness feedback and retry option are explicitly in your approved scope and progress report. [2] [3]For your star rules, feedback must also show: - Remaining “free mistakes” count - Current star count - A clear warning when using a hint (“This will reduce 1 star”)
+
+    
+    
+    Admin requirements
+
+    Admin functions come directly from the approved module list (user management CRUD) and rubric (secure CRUD with validation, search/filter, logging). [2] [4]
+
+    Admin capabilities: - Create/Update/Deactivate Teacher and Student accounts - Assign students to a teacher (“teacher roster”) - View usage dashboards: student progress summaries, generation status, audit logs - Search/filter users (active vs archived, role, teacher assignment) - Manage cosmetics catalog (cosmetics-only shop inventory)
+
+    Archive screen is consistent with your UI reference (tabular list with Name/Role/Email/Status/Last login/Action).
+
+    
+    
+    Teacher requirements
+
+    Teacher capabilities (per assigned students): - View assigned student list and per-student detail: level stars, score history, completion timeline - View leaderboard for their roster - Review AI generation outcomes (what levels were generated, when, and any flagged content) - Apply allowed “difficulty/star policy” overrides (no direct question editing)
+
+    This aligns to the platform’s goal of letting teachers review score history and completed lessons/levels. [3]
+
+    
+    
+    
+    Technical architecture and data model
+
+    
+    Stack and major subsystems
+
+    Frontend - React (routing, state, UI shells) - Tailwind CSS (pixel UI styling; component variants for “panel,” “pixel button,” “icon tile”) - Game rendering layer: - For drag/drop and puzzle scenes, either DOM-based interactions (fast to build) or Canvas/WebGL depending on chosen library.
+
+    Backend - Express.js API - Prisma ORM - MySQL database - AI provider integration (server-side only)
+
+    PWA requirements - Web App Manifest + icons - Service worker caching at least for static assets (pixel UI images, sprites, level backgrounds) - Landscape-first responsive shell; mobile devices used in landscape should not break layout
+
+    
+    
+    Design-to-code workflow recommendations
+
+    To keep your pixel UI consistent and fast to build:
+
+    Use Figma Auto Layout patterns so your panels, tables, and “icon tile” buttons respond predictably to different landscape widths; Figma explicitly positions Auto Layout as the mechanism for responsive, adaptable designs. [5]
+
+    Where appropriate, leverage UI kit/library patterns: Figma describes UI kits as libraries of reusable components/styles/variables that help kick-start screen development. [7]
+
+    If you want to optimize handoff and Copilot-style code generation, evaluate Figma Code Connect: Figma describes it as a bridge between repositories and Figma Dev Mode that connects code components directly to design components and improves AI guidance with “direct references to your actual code.” [8]
+
+    
+    
+    Data model overview
+
+    Below is a Prisma-oriented model outline that directly supports your rules (20 levels, pair-wise game assignment, admin-created accounts, star outcomes, retries, cosmetics-only shop, teacher rosters, and audit logging).
+
+    Core identity and access: - User (id, email, username, passwordHash, role, status, lastLoginAt, createdAt) - TeacherProfile, StudentProfile (1:1 with User) - TeacherStudentAssignment (teacherId, studentId, assignedAt, status) - OtpToken (userId, codeHash, expiresAt, consumedAt, purpose = ACTIVATE/RESET) - LoginAttempt (userId/email, ip, success, createdAt) - AccountLock (userId, lockedUntil, reason)
+
+    Progression and gameplay: - LevelDefinition (levelNumber 1–20, defaultDifficulty, createdAt) - StudentLevelState (studentId, levelNumber, status LOCKED/UNLOCKED/COMPLETED/FAILED, bestStars, bestScore, attemptsCount, lastAttemptAt) - LevelGameAssignment (studentId, levelNumber, gameMode) — materialized at provisioning - GameSession (studentId, levelNumber, gameMode, startedAt, endedAt, starsStart, starsEnd, mistakes, hintsUsed, scoreAwarded, maxScoreMultiplierUsed, outcome) - SessionEvent (optional: captures granular events for debugging; can be pruned)
+
+    AI content: - QuestionPack (studentId, levelNumber, gameMode, status READY/FAILED, aiModel, promptVersion, promptText, generatedAt) - Question (questionPackId, type, prompt, correctAnswer, explanation, difficultyTag, orderIndex) - QuestionOption (questionId, text, isCorrect) — for MCQ types - Hint (questionId or questionPackId, hintText, hintCostStars = 1, createdAt)
+
+    Economy and cosmetics: - Wallet (studentId, starCurrencyBalance) - CosmeticItem (id, category HAIR/EYES/MOUTH/FRAME/BACKGROUND/etc, priceStars, rarity, isActive) - Purchase (studentId, cosmeticItemId, priceStars, purchasedAt) - InventoryItem (studentId, cosmeticItemId, ownedAt) - EquippedCosmetics (studentId, hairId, eyesId, mouthId, frameId, etc.)
+
+    Oversight and compliance: - AuditLog (actorUserId, actionType, entityType, entityId, metadataJson, ip, createdAt) — supports rubric logging/monitoring expectations. [4] - ContentFlag (teacherId/adminId, studentId, levelNumber, reason, status, createdAt)
+
+    
+    
+    API surface outline
+
+    This is an Express-ready endpoint map, written to support a clean React client.
+
+    Auth and verification: - POST /auth/login - POST /auth/logout - POST /auth/request-otp (activation/reset) - POST /auth/verify-otp - POST /auth/reset-password (optional)
+
+    Admin (RBAC: ADMIN): - POST /admin/users (create student/teacher) - GET /admin/users (search/filter) - PATCH /admin/users/:id (status, role, profile) - POST /admin/assignments (assign student to teacher) - GET /admin/audit-logs (filter by action/user/date) - GET /admin/provisioning (question generation statuses)
+
+    Teacher (RBAC: TEACHER): - GET /teacher/students - GET /teacher/students/:studentId/overview - GET /teacher/students/:studentId/levels - POST /teacher/students/:studentId/levels/:levelNumber/flag (request regen) - PATCH /teacher/students/:studentId/settings (allowed difficulty/star policy overrides)
+
+    Student (RBAC: STUDENT): - GET /student/me - GET /student/levels - POST /student/levels/:levelNumber/start-session - POST /student/sessions/:sessionId/submit - GET /student/leaderboard (teacher roster leaderboard view) - GET /student/shop/items - POST /student/shop/purchase - PATCH /student/profile/equip
+
+    System services: - POST /internal/ai/generate-student-questionpacks (protected internal route or job runner) - POST /internal/ai/regenerate-level (admin/teacher-triggered)
+
+    
+    
+    Security, validation, and rubric alignment
+
+    Your rubric requires: - authentication + authorization, secure password handling/hashing [4] - CRUD with validation and access control [4] - OTP/email verification [4] - search/filter [4] - encryption/hashing + logging/monitoring of critical actions [4]
+
+    Implementation requirements (MVP-grade): - Server-side schema validation on every write endpoint (auth, user creation, session submit, purchase). - Role checks as middleware (deny-by-default). - Audit logs for admin actions, score submissions, and shop purchases. - Login attempt tracking + lockout timers, as your progress report specifies. [3]
+
+    
+    
+    
+    Delivery plan and acceleration toolkit
+
+    
+    Practical build sequencing
+
+    This sequencing targets “demo-able value” early while satisfying rubric/security constraints.
+
+    Foundation: DB schema + Prisma migrations + Express project structure
+
+    Auth: login, OTP activation, RBAC middleware, login-tries lockout, audit logging
+
+    Admin: create users, search/filter, archive/deactivate, assign students to teachers
+
+    Student: level select UI, level unlock logic, session start/submit pipeline, star rules
+
+    Game A + Game B (drag/drop foundations shared across both)
+
+    Game C (jigsaw) + post-puzzle identification question stage
+
+    Teacher dashboard: roster, student detail, leaderboard, flagging/regeneration flows
+
+    Cosmetics shop + wallet + profile equip
+
+    Polish: responsive landscape, accessibility, performance, deployment hardening
+
+    
+    
+    Libraries and prebuilt components to speed up development
+
+    You asked specifically for suggestions that could accelerate development while still meeting requirements. Below are pragmatic options (choose based on your preferred rendering approach: DOM vs Canvas vs full game engine).
+
+    Game/rendering - Phaser (2D game engine) if you want the mini-games built as true “game scenes” with a consistent loop. - PixiJS (2D renderer) if you want fine control but still keep things lightweight. - Konva + React Konva if you prefer Canvas interactions while staying React-centric.
+
+    Drag-and-drop mechanics (Hardware Matching + CPU Assembling) - dnd-kit: modern, composable drag-and-drop; good for “drag label → drop zone,” and “drag part → slot.” - React DnD: mature option; good if you prefer a long-established ecosystem. - If you do Canvas-based parts: your engine choice (Phaser/Pixi/Konva) often handles drag logic natively.
+
+    Jigsaw puzzle (Software Applications) - Look for a React-compatible jigsaw component that supports: - generating pieces from an image - snapping tolerance - completion detection callback - If you go Phaser: you can implement jigsaw by slicing textures into sprites and using snap-to-grid rules (more work, but fully controllable).
+
+    UI and pixel styling - Tailwind is fine for layout, but pixel style usually needs: - consistent “panel” primitives (border, inner shadow, pixel radius emulation) - bitmap/pixel fonts (loaded via CSS) - Consider building a small internal component set: - <PixelPanel>, <PixelButton>, <IconTileButton>, <PixelTable>, <StarMeter>, <ToastDialog>
+
+    Forms and validation - react-hook-form + zod for fast, consistent forms (Admin create user, OTP verification, etc.). - Mirror zod schemas on the server for consistent validation rules.
+
+    State and data fetching - TanStack Query for server state (levels list, student progress, shop items). - Zustand for local UI/game state (HUD status, star count during a session).
+
+    PWA packaging - If using Vite: vite-plugin-pwa to generate manifest + service worker quickly. - Cache static assets (sprites, UI images, audio) for smoother gameplay on weak connections.
+
+    Observability - Basic request logging + audit logging tables meet rubric needs; add structured logs if time permits.
+
+    
+    
+    Fast prototyping workflow in Figma
+
+    To speed wireframing and ensure responsive landscape panels:
+
+    Use Figma Auto Layout for your “panel components” (tables, forms, button rows), because Auto Layout is intended to keep designs responsive and adaptable as content changes. [5]
+
+    If you want a stronger design-to-code bridge later, consider Figma Code Connect; Figma positions it as connecting code components to design components inside Dev Mode, improving implementation clarity and AI-assisted workflows. [8]
+
+    For puzzle-like interaction prototyping without writing code, Figma/ FigJam templates that support drag-and-drop puzzle behaviors can help you storyboard the jigsaw flow and hint interactions quickly. [9]
+
+    
+    
+    Remaining implementation choices I assumed
+
+    To keep this PRD executable, I made a few explicit defaults (you can change them without breaking the model): - “Star currency” is implemented as a wallet currency that is separate from “level stars earned” (rating). This avoids the logical conflict of spending your performance rating. - AI-generated question packs are validated and stored as JSON-shaped records per level per student, with a status (“ready/failed”) and teacher/admin regeneration pathways. - “Leaderboards per class” are interpreted as “per teacher roster” since the app does not model year levels/sections.
+
+    If you want, I can convert this into a Copilot-ready “implementation checklist” format (routes + Prisma schema skeleton + React page/component map) using the same requirements and UI style.
+
+    
+    
+    
+    
+    
+
+    
+    [1] Copy of ICT of Pre proposal (iTECHS).docx
+
+    https://docs.google.com/document/d/1iG2A5h2nrZEBM73FpOejzPafZ3HijJn7/edit?usp=drivesdk&ouid=108149871891213447387&rtpof=true&sd=true
+
+    [2] Copy of Approved Title Form V2.docx
+
+    https://docs.google.com/document/d/1H6qvycwNqvMd2pMB6n5oZR_zM1Vt8-F6/edit?usp=drivesdk&ouid=108149871891213447387&rtpof=true&sd=true
+
+    [3] Copy of System Progress Report V2
+
+    https://docs.google.com/document/d/1wYToIo55qjJKlKJHtUNnVl19LzC7XPc0TnOI96pdJ24/edit?usp=drivesdk
+
+    [4] Copy of project rubric.pdf
+
+    https://drive.google.com/file/d/1c89b3V7v9QXqbx8xAMF0bElR03OYxxdW/view?usp=drivesdk
+
+    [5] Guide to auto layout – Figma Learn - Help Center
+
+    https://help.figma.com/hc/en-us/articles/360040451373-Explore-auto-layout-properties?utm_source=chatgpt.com
+
+    [6] [7] Start designing with UI kits – Figma Learn - Help Center
+
+    https://help.figma.com/hc/en-us/articles/24037724065943-Start-designing-with-UI-kits?utm_source=chatgpt.com
+
+    [8] Code Connect – Figma Learn - Help Center
+
+    https://help.figma.com/hc/en-us/articles/23920389749655-Code-Connect?utm_source=chatgpt.com
+
+    [9] Tangrams Puzzle Game | Free Template | FigJam
+
+    https://www.figma.com/templates/tangram-puzzle-game/?utm_source=chatgpt.com
+
+    
+    
+      
+        
+                
+        
+        
+              
+      
+    
+  
+
+

@@ -1,0 +1,239 @@
+{
+  "id": "game-one-level-04",
+  "gameType": "GAME_ONE",
+  "levelNumber": 4,
+  "title": "Apex Sentinel",
+  "subtitle": "Boss Arena and Final Mission Lock",
+  "settings": {
+    "requireBossDefeat": true,
+    "timerEnabled": true,
+    "timerSeconds": 210,
+    "coinGoal": 8,
+    "playerHealth": 4
+  },
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "questions": [
+    {
+      "id": "cache-question",
+      "prompt": "Why is CPU cache memory useful?",
+      "choices": [
+        "It stores music files",
+        "It keeps frequently used data close to the CPU",
+        "It replaces the monitor",
+        "It removes the operating system"
+      ],
+      "answerIndex": 1,
+      "successText": "Correct. You unlocked the arena gate.",
+      "failureText": "Not quite. Retry the statue to open the gate."
+    },
+    {
+      "id": "protocol-question",
+      "prompt": "Which protocol is commonly used to securely browse websites?",
+      "choices": [
+        "HTTP only",
+        "FTP",
+        "HTTPS",
+        "SMTP"
+      ],
+      "answerIndex": 2,
+      "successText": "Correct. The portal lock condition is now one step closer.",
+      "failureText": "Incorrect. Retry and answer the statue correctly."
+    }
+  ],
+  "rooms": [
+    {
+      "id": "room-1",
+      "backgroundKey": "swampTrail",
+      "objective": "Push through hunter patrols and gather shards before entering the relay chamber.",
+      "spawn": { "x": 140, "y": 560 },
+      "platforms": [
+        { "id": "floor", "x": 640, "y": 684, "width": 1280, "bodyHeight": 72, "textureKey": "grass" },
+        { "id": "left-step", "x": 320, "y": 552, "width": 220, "bodyHeight": 24, "textureKey": "wood" },
+        { "id": "mid-step", "x": 620, "y": 474, "width": 240, "bodyHeight": 24, "textureKey": "stone" },
+        { "id": "right-step", "x": 950, "y": 386, "width": 220, "bodyHeight": 24, "textureKey": "wood" }
+      ],
+      "coins": [
+        { "id": "coin-1", "x": 320, "y": 502 },
+        { "id": "coin-2", "x": 620, "y": 424 },
+        { "id": "coin-3", "x": 950, "y": 336 }
+      ],
+      "ghosts": [
+        {
+          "id": "ghost-1",
+          "x": 500,
+          "y": 594,
+          "patrolDistance": 220,
+          "speed": 86
+        }
+      ],
+      "projectileEnemies": [
+        {
+          "id": "hunter-1",
+          "enemyType": "hunter",
+          "x": 860,
+          "y": 360,
+          "fireDirection": "LEFT",
+          "fireIntervalMs": 1550,
+          "projectileSpeed": 315,
+          "projectileLifetimeMs": 2200,
+          "initialDelayMs": 850
+        }
+      ],
+      "portal": {
+        "x": 1148,
+        "y": 556,
+        "locked": false,
+        "targetRoomId": "room-2"
+      }
+    },
+    {
+      "id": "room-2",
+      "backgroundKey": "tutorialGrove",
+      "objective": "Answer both statues to stabilize the apex portal lock sequence.",
+      "postUnlockObjective": "Statue locks cleared. Enter the apex arena and defeat the sentinel.",
+      "spawn": { "x": 140, "y": 560 },
+      "platforms": [
+        { "id": "floor", "x": 640, "y": 684, "width": 1280, "bodyHeight": 72, "textureKey": "stone" },
+        { "id": "left-statue-ledge", "x": 360, "y": 540, "width": 220, "bodyHeight": 24, "textureKey": "grass" },
+        { "id": "right-statue-ledge", "x": 760, "y": 458, "width": 220, "bodyHeight": 24, "textureKey": "wood" },
+        { "id": "upper-portal-ledge", "x": 1030, "y": 362, "width": 260, "bodyHeight": 24, "textureKey": "stone" }
+      ],
+      "unlockPlatforms": [
+        {
+          "id": "bridge-1",
+          "x": 560,
+          "y": 500,
+          "width": 180,
+          "bodyHeight": 24,
+          "textureKey": "wood",
+          "lockedByQuestionId": "cache-question",
+          "startsHidden": true
+        },
+        {
+          "id": "bridge-2",
+          "x": 885,
+          "y": 420,
+          "width": 180,
+          "bodyHeight": 24,
+          "textureKey": "grass",
+          "lockedByQuestionId": "protocol-question",
+          "startsHidden": true
+        }
+      ],
+      "barriers": [
+        {
+          "id": "arena-gate",
+          "x": 940,
+          "y": 520,
+          "width": 70,
+          "height": 180,
+          "bodyHeight": 170,
+          "textureKey": "stone",
+          "lockedByQuestionId": "protocol-question",
+          "unlockBehavior": "drop"
+        }
+      ],
+      "coins": [
+        { "id": "coin-4", "x": 360, "y": 490 },
+        { "id": "coin-5", "x": 760, "y": 408 },
+        { "id": "coin-6", "x": 1030, "y": 312 }
+      ],
+      "ghosts": [],
+      "projectileEnemies": [
+        {
+          "id": "caster-1",
+          "enemyType": "elemental",
+          "x": 980,
+          "y": 544,
+          "fireDirection": "LEFT",
+          "fireIntervalMs": 1680,
+          "projectileSpeed": 305,
+          "projectileLifetimeMs": 2350,
+          "initialDelayMs": 900
+        }
+      ],
+      "villain": [
+        {
+          "x": 360,
+          "y": 484,
+          "appearance": "STATUE",
+          "interactionLabel": "statue",
+          "questionId": "cache-question"
+        },
+        {
+          "x": 760,
+          "y": 402,
+          "appearance": "STATUE",
+          "interactionLabel": "statue",
+          "questionId": "protocol-question"
+        }
+      ],
+      "portal": {
+        "x": 1148,
+        "y": 286,
+        "locked": false,
+        "targetRoomId": "room-3"
+      }
+    },
+    {
+      "id": "room-3",
+      "backgroundKey": "ruinsGate",
+      "objective": "Destroy the sentinel boss, then use the ending portal.",
+      "spawn": { "x": 140, "y": 560 },
+      "platforms": [
+        { "id": "floor", "x": 640, "y": 684, "width": 1280, "bodyHeight": 72, "textureKey": "wood" },
+        { "id": "left-cover", "x": 360, "y": 598, "width": 180, "bodyHeight": 24, "textureKey": "stone" },
+        { "id": "center-cover", "x": 620, "y": 530, "width": 180, "bodyHeight": 24, "textureKey": "grass" },
+        { "id": "right-boss-stage", "x": 930, "y": 470, "width": 260, "bodyHeight": 24, "textureKey": "stone" }
+      ],
+      "coins": [
+        { "id": "coin-7", "x": 360, "y": 548 },
+        { "id": "coin-8", "x": 620, "y": 480 },
+        { "id": "coin-9", "x": 930, "y": 420 }
+      ],
+      "ghosts": [],
+      "projectileEnemies": [
+        {
+          "id": "boss-1",
+          "enemyType": "boss",
+          "x": 930,
+          "y": 338,
+          "fireDirection": "LEFT",
+          "fireIntervalMs": 1300,
+          "projectileSpeed": 350,
+          "projectileLifetimeMs": 3000,
+          "initialDelayMs": 1200,
+          "hitPoints": 10
+        },
+        {
+          "id": "hunter-2",
+          "enemyType": "hunter",
+          "x": 760,
+          "y": 346,
+          "fireDirection": "LEFT",
+          "fireIntervalMs": 1700,
+          "projectileSpeed": 315,
+          "projectileLifetimeMs": 2250,
+          "initialDelayMs": 1100
+        }
+      ],
+      "villain": {
+        "x": 620,
+        "y": 474,
+        "appearance": "STATUE",
+        "interactionLabel": "statue",
+        "questionId": "protocol-question"
+      },
+      "portal": {
+        "x": 1148,
+        "y": 556,
+        "locked": true,
+        "endsLevel": true,
+        "questionId": "protocol-question"
+      }
+    }
+  ]
+}

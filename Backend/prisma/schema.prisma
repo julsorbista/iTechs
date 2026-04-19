@@ -1,0 +1,498 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  TEACHER
+  STUDENT
+}
+
+enum OtpPurpose {
+  ACTIVATE
+  LOGIN
+  RESET
+}
+
+enum LevelStatus {
+  LOCKED
+  UNLOCKED
+  COMPLETED
+}
+
+enum GameType {
+  GAME_ONE
+  GAME_TWO
+  GAME_THREE
+}
+
+enum SessionStatus {
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+}
+
+enum DifficultyPreset {
+  EASY
+  STANDARD
+  HARD
+}
+
+enum ContentFlagStatus {
+  PENDING
+  IN_REVIEW
+  RESOLVED
+  REJECTED
+}
+
+enum TeacherLevelVersionState {
+  DRAFT
+  PUBLISHED
+}
+
+model User {
+  id            String     @id @default(cuid())
+  username      String     @unique
+  email         String     @unique
+  password      String
+  role          UserRole   @default(STUDENT)
+  firstName     String?
+  lastName      String?
+  section       String?
+  isArchived    Boolean    @default(false)
+  isVerified    Boolean    @default(false)
+  lastLogin     DateTime?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  // OTP fields
+  otpCode       String?
+  otpExpiry     DateTime?
+  otpVerified   Boolean    @default(false)
+
+  // Relationships
+  createdStudents User[]   @relation("TeacherStudents")
+  teacher       User?     @relation("TeacherStudents", fields: [teacherId], references: [id])
+  teacherId     String?
+  courseCode    String?    @unique
+
+  exams         Exam[]    @relation("StudentExams")
+  scores        Score[]
+  createdExams  Exam[]    @relation("TeacherExams")
+  otpTokens     OtpToken[]
+  loginAttempts LoginAttempt[]
+  accountLocks  AccountLock[]
+  auditLogs     AuditLog[] @relation("AuditActor")
+  levelStates   StudentLevelState[]
+  gameSessions  GameSession[]
+  levelAttempts LevelAttempt[]
+  authoredPolicies TeacherStudentPolicy[] @relation("TeacherPolicyAuthor")
+  studentPolicies TeacherStudentPolicy[] @relation("TeacherPolicyStudent")
+  authoredContentFlags ContentFlag[] @relation("ContentFlagTeacher")
+  studentContentFlags ContentFlag[] @relation("ContentFlagStudent")
+  resolvedContentFlags ContentFlag[] @relation("ContentFlagResolver")
+  updatedLevelContents LevelContent[] @relation("LevelContentUpdater")
+  teacherLevelRecords TeacherLevelRecord[]
+  teacherLevelWorkspaces TeacherLevelWorkspace[] @relation("TeacherLevelWorkspaceOwner")
+  authoredTeacherLevelVersions TeacherLevelVersion[] @relation("TeacherLevelVersionAuthor")
+  dynamicQuestionAssignments DynamicQuestionAssignment[] @relation("DynamicQuestionAssignmentStudent")
+
+  @@map("users")
+}
+
+model OtpToken {
+  id          String     @id @default(cuid())
+  userId      String
+  codeHash    String
+  purpose     OtpPurpose @default(LOGIN)
+  expiresAt   DateTime
+  consumedAt  DateTime?
+  createdAt   DateTime   @default(now())
+
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, purpose, createdAt])
+  @@index([expiresAt])
+  @@map("otp_tokens")
+}
+
+model LoginAttempt {
+  id          String    @id @default(cuid())
+  userId      String?
+  usernameRaw String
+  ipAddress   String?
+  success     Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+
+  user        User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([userId, createdAt])
+  @@index([usernameRaw, createdAt])
+  @@map("login_attempts")
+}
+
+model AccountLock {
+  id          String    @id @default(cuid())
+  userId      String
+  reason      String
+  lockedUntil DateTime
+  createdAt   DateTime  @default(now())
+
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, lockedUntil])
+  @@map("account_locks")
+}
+
+model AuditLog {
+  id          String    @id @default(cuid())
+  actorUserId String?
+  action      String
+  entityType  String
+  entityId    String?
+  metadata    Json?
+  ipAddress   String?
+  createdAt   DateTime  @default(now())
+
+  actor       User?     @relation("AuditActor", fields: [actorUserId], references: [id], onDelete: SetNull)
+
+  @@index([actorUserId, createdAt])
+  @@index([action, createdAt])
+  @@map("audit_logs")
+}
+
+model Exam {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  examCode    String    @unique
+  isActive    Boolean   @default(true)
+  timeLimit   Int?      // in minutes
+  totalMarks  Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // Relationships
+  teacher     User      @relation("TeacherExams", fields: [teacherId], references: [id])
+  teacherId   String
+  students    User[]    @relation("StudentExams")
+  scores      Score[]
+  questions   Question[]
+
+  @@map("exams")
+}
+
+model Question {
+  id          String    @id @default(cuid())
+  question    String
+  options     Json?     // Store as JSON array for multiple choice
+  correctAnswer String
+  marks       Int       @default(1)
+  type        String    @default("multiple_choice") // multiple_choice, true_false, short_answer, etc.
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // Relationships
+  exam        Exam      @relation(fields: [examId], references: [id], onDelete: Cascade)
+  examId      String
+
+  @@map("questions")
+}
+
+model Score {
+  id          String    @id @default(cuid())
+  totalMarks  Int
+  obtainedMarks Int
+  percentage  Float
+  timeTaken   Int?      // in minutes
+  completedAt DateTime  @default(now())
+
+  // Relationships
+  student     User      @relation(fields: [studentId], references: [id])
+  studentId   String
+  exam        Exam      @relation(fields: [examId], references: [id])
+  examId      String
+
+  @@map("scores")
+}
+
+model LevelDefinition {
+  id          String    @id @default(cuid())
+  levelNumber Int
+  gameType    GameType
+  gameLevelNumber Int
+  title       String
+  description String?
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  studentStates StudentLevelState[]
+  sessions      GameSession[]
+  attempts      LevelAttempt[]
+  content       LevelContent?
+  contentFlags  ContentFlag[]
+  dynamicQuestionAssignments DynamicQuestionAssignment[]
+
+  @@unique([gameType, gameLevelNumber])
+  @@map("level_definitions")
+}
+
+model DynamicQuestionVariant {
+  id                String   @id @default(cuid())
+  cacheScope        String
+  gameType          GameType @default(GAME_ONE)
+  requestFingerprint String
+  variantFingerprint String
+  questionsById     Json
+  expiresAt         DateTime?
+  staleAt           DateTime?
+  lastAssignedAt    DateTime?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  assignments       DynamicQuestionAssignment[]
+
+  @@unique([cacheScope, gameType, requestFingerprint, variantFingerprint], map: "dqv_scope_game_fp_variant_fp_key")
+  @@index([cacheScope, gameType, requestFingerprint, staleAt, expiresAt], map: "dqv_scope_game_fp_stale_expires_idx")
+  @@index([expiresAt], map: "dqv_expires_idx")
+  @@map("dynamic_question_variants")
+}
+
+model DynamicQuestionAssignment {
+  id                String   @id @default(cuid())
+  studentId         String
+  levelId           String?
+  cacheScope        String
+  gameType          GameType @default(GAME_ONE)
+  requestFingerprint String
+  loginSessionKey   String
+  variantId         String
+  assignedAt        DateTime @default(now())
+  expiresAt         DateTime?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  student           User     @relation("DynamicQuestionAssignmentStudent", fields: [studentId], references: [id], onDelete: Cascade)
+  level             LevelDefinition? @relation(fields: [levelId], references: [id], onDelete: SetNull)
+  variant           DynamicQuestionVariant @relation(fields: [variantId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, cacheScope, gameType, requestFingerprint, loginSessionKey], map: "dqa_student_scope_game_fp_login_key")
+  @@index([studentId, cacheScope, gameType, requestFingerprint, assignedAt], map: "dqa_student_scope_game_fp_assigned_idx")
+  @@index([variantId], map: "dqa_variant_idx")
+  @@index([expiresAt], map: "dqa_expires_idx")
+  @@map("dynamic_question_assignments")
+}
+
+model StudentLevelState {
+  id            String      @id @default(cuid())
+  studentId     String
+  levelId       String
+  status        LevelStatus @default(LOCKED)
+  attemptsCount Int         @default(0)
+  bestStars     Int         @default(0)
+  bestScore     Int         @default(0)
+  unlockedAt    DateTime?
+  completedAt   DateTime?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  student       User        @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  level         LevelDefinition @relation(fields: [levelId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, levelId])
+  @@index([studentId, status])
+  @@map("student_level_states")
+}
+
+model GameSession {
+  id             String       @id @default(cuid())
+  studentId      String
+  levelId        String
+  levelNumber    Int
+  gameType       GameType
+  status         SessionStatus @default(IN_PROGRESS)
+  startingStars  Int          @default(3)
+  mistakes       Int          @default(0)
+  hintsUsed      Int          @default(0)
+  starsRemaining Int          @default(3)
+  starsEarned    Int          @default(0)
+  retryMultiplier Float       @default(1.0)
+  baseScore      Int          @default(0)
+  finalScore     Int          @default(0)
+  startedAt      DateTime     @default(now())
+  completedAt    DateTime?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  student        User         @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  level          LevelDefinition @relation(fields: [levelId], references: [id], onDelete: Cascade)
+  attempts       LevelAttempt[]
+
+  @@index([studentId, levelNumber, createdAt])
+  @@index([status])
+  @@map("game_sessions")
+}
+
+model LevelAttempt {
+  id             String    @id @default(cuid())
+  studentId      String
+  levelId        String
+  sessionId      String?
+  attemptNumber  Int
+  gameType       GameType
+  mistakes       Int       @default(0)
+  hintsUsed      Int       @default(0)
+  starsEarned    Int       @default(0)
+  baseScore      Int       @default(0)
+  finalScore     Int       @default(0)
+  retryMultiplier Float    @default(1.0)
+  completed      Boolean   @default(false)
+  completedAt    DateTime?
+  createdAt      DateTime  @default(now())
+
+  student        User      @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  level          LevelDefinition @relation(fields: [levelId], references: [id], onDelete: Cascade)
+  session        GameSession? @relation(fields: [sessionId], references: [id], onDelete: SetNull)
+
+  @@index([studentId, levelId, createdAt])
+  @@index([sessionId])
+  @@map("level_attempts")
+}
+
+model TeacherStudentPolicy {
+  id               String           @id @default(cuid())
+  teacherId        String
+  studentId        String
+  difficultyPreset DifficultyPreset @default(STANDARD)
+  freeMistakes     Int              @default(3)
+  hintStarCost     Int              @default(1)
+  notes            String?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  teacher          User             @relation("TeacherPolicyAuthor", fields: [teacherId], references: [id], onDelete: Cascade)
+  student          User             @relation("TeacherPolicyStudent", fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@unique([teacherId, studentId])
+  @@index([studentId])
+  @@map("teacher_student_policies")
+}
+
+model ContentFlag {
+  id              String            @id @default(cuid())
+  teacherId       String
+  studentId       String
+  levelId         String
+  gameType        GameType          @default(GAME_ONE)
+  reason          String
+  status          ContentFlagStatus @default(PENDING)
+  resolutionNote  String?
+  resolverUserId  String?
+  requestedAt     DateTime          @default(now())
+  resolvedAt      DateTime?
+
+  teacher         User              @relation("ContentFlagTeacher", fields: [teacherId], references: [id], onDelete: Cascade)
+  student         User              @relation("ContentFlagStudent", fields: [studentId], references: [id], onDelete: Cascade)
+  resolver        User?             @relation("ContentFlagResolver", fields: [resolverUserId], references: [id], onDelete: SetNull)
+  level           LevelDefinition   @relation(fields: [levelId], references: [id], onDelete: Cascade)
+
+  @@index([teacherId, requestedAt])
+  @@index([studentId, gameType, levelId])
+  @@map("content_flags")
+}
+
+model LevelContent {
+  id              String            @id @default(cuid())
+  levelId          String            @unique
+  draftJson        Json
+  publishedJson    Json
+  updatedByUserId  String?
+  publishedAt      DateTime?
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  level            LevelDefinition   @relation(fields: [levelId], references: [id], onDelete: Cascade)
+  updatedBy        User?             @relation("LevelContentUpdater", fields: [updatedByUserId], references: [id], onDelete: SetNull)
+
+  @@index([updatedByUserId, updatedAt])
+  @@map("level_contents")
+}
+
+model TeacherLevelRecord {
+  id              String   @id @default(cuid())
+  teacherId       String
+  levelNumber     Int
+  gridRows        Int      @default(18)
+  gridCols        Int      @default(32)
+  cellBackgrounds Json
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  teacher         User     @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+
+  @@unique([teacherId, levelNumber])
+  @@index([teacherId, updatedAt])
+  @@map("teacher_level_records")
+}
+
+model TeacherLevelWorkspace {
+  id          String    @id @default(cuid())
+  teacherId   String
+  gameType    GameType  @default(GAME_ONE)
+  levelNumber Int
+  title       String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  teacher     User      @relation("TeacherLevelWorkspaceOwner", fields: [teacherId], references: [id], onDelete: Cascade)
+  versions    TeacherLevelVersion[]
+
+  @@unique([teacherId, gameType, levelNumber])
+  @@index([teacherId, updatedAt])
+  @@map("teacher_level_workspaces")
+}
+
+model TeacherLevelVersion {
+  id              String                   @id @default(cuid())
+  workspaceId     String
+  state           TeacherLevelVersionState @default(DRAFT)
+  versionNumber   Int
+  payload         Json
+  createdByUserId String
+  createdAt       DateTime                 @default(now())
+
+  workspace       TeacherLevelWorkspace    @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  createdBy       User                     @relation("TeacherLevelVersionAuthor", fields: [createdByUserId], references: [id], onDelete: Cascade)
+
+  @@unique([workspaceId, state, versionNumber])
+  @@index([workspaceId, state, createdAt])
+  @@index([createdByUserId, createdAt])
+  @@map("teacher_level_versions")
+}
+
+model ArchivedUser {
+  id            String     @id @default(cuid())
+  userId        String     @unique // Original user ID
+  username      String
+  email         String
+  role          UserRole
+  firstName     String?
+  lastName      String?
+  section       String?
+  teacherId     String?
+  archivedAt    DateTime   @default(now())
+  archivedBy    String     // ID of user who archived
+  archiveReason String?
+  userData      Json       // Store complete user data as JSON for restoration
+
+  @@map("archived_users")
+}

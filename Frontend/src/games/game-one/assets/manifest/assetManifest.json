@@ -1,0 +1,240 @@
+{
+  "player": {
+    "key": "gameOnePlayerIdle",
+    "frameWidth": 160,
+    "frameHeight": 280,
+    "frameCount": 20,
+    "scale": 0.48,
+    "body": {
+      "width": 98,
+      "height": 192,
+      "offsetX": 31,
+      "offsetY": 80
+    }
+  },
+  "playerRun": {
+    "key": "gameOnePlayerRun",
+    "frameWidth": 160,
+    "frameHeight": 280,
+    "frameCount": 20
+  },
+  "playerJump": {
+    "key": "gameOnePlayerJump",
+    "frameWidth": 160,
+    "frameHeight": 280,
+    "frameCount": 8
+  },
+  "ghost": {
+    "key": "gameOneGhost",
+    "frameWidth": 80,
+    "frameHeight": 80,
+    "scale": 1.15,
+    "speed": 76,
+    "body": {
+      "width": 30,
+      "height": 34,
+      "offsetX": 25,
+      "offsetY": 24
+    }
+  },
+  "projectileCaster": {
+    "key": "gameOneProjectileCaster",
+    "frameWidth": 123,
+    "frameHeight": 123,
+    "scale": 0.76,
+    "fireIntervalMs": 1800,
+    "projectileSpeed": 285,
+    "projectileLifetimeMs": 2550,
+    "projectileOffsetX": 44,
+    "projectileOffsetY": 6,
+    "body": {
+      "width": 48,
+      "height": 54,
+      "offsetX": 36,
+      "offsetY": 42
+    }
+  },
+  "hunterEnemy": {
+    "key": "gameOneHunterEnemy",
+    "frameWidth": 96,
+    "frameHeight": 96,
+    "scale": 0.88,
+    "fireIntervalMs": 1600,
+    "projectileSpeed": 300,
+    "projectileLifetimeMs": 2300,
+    "projectileOffsetX": 42,
+    "projectileOffsetY": 0,
+    "driftAmplitude": 38,
+    "driftSpeed": 1.9,
+    "body": {
+      "width": 44,
+      "height": 40,
+      "offsetX": 26,
+      "offsetY": 30
+    }
+  },
+  "bossEnemy": {
+    "key": "gameOneBossEnemy",
+    "frameWidth": 192,
+    "frameHeight": 192,
+    "scale": 0.72,
+    "fireIntervalMs": 1350,
+    "projectileSpeed": 340,
+    "projectileLifetimeMs": 3000,
+    "projectileOffsetX": 72,
+    "projectileOffsetY": 6,
+    "hitPoints": 8,
+    "body": {
+      "width": 84,
+      "height": 92,
+      "offsetX": 54,
+      "offsetY": 58
+    }
+  },
+  "enemyProjectile": {
+    "key": "gameOneEnemyProjectile",
+    "frameWidth": 113,
+    "frameHeight": 126,
+    "scale": 0.54,
+    "speed": 285,
+    "lifetimeMs": 2550,
+    "body": {
+      "width": 28,
+      "height": 32,
+      "offsetX": 42,
+      "offsetY": 47
+    }
+  },
+  "bossProjectile": {
+    "key": "gameOneBossProjectile",
+    "frameWidth": 96,
+    "frameHeight": 96,
+    "scale": 0.72,
+    "speed": 340,
+    "lifetimeMs": 3000,
+    "body": {
+      "width": 30,
+      "height": 30,
+      "offsetX": 33,
+      "offsetY": 33
+    }
+  },
+  "coin": {
+    "key": "gameOneCoin",
+    "frameWidth": 64,
+    "frameHeight": 64,
+    "scale": 0.7
+  },
+  "portal": {
+    "key": "gameOnePortal",
+    "frameWidth": 128,
+    "frameHeight": 256,
+    "scale": 0.5,
+    "body": {
+      "width": 54,
+      "height": 120,
+      "offsetX": 37,
+      "offsetY": 76
+    }
+  },
+  "villain": {
+    "key": "gameOneVillain",
+    "scale": 1.05,
+    "body": {
+      "width": 54,
+      "height": 66,
+      "offsetX": 37,
+      "offsetY": 48
+    }
+  },
+  "backgrounds": {
+    "tutorialGrove": {
+      "key": "gameOneBgTutorialGrove"
+    },
+    "swampTrail": {
+      "key": "gameOneBgSwampTrail"
+    },
+    "ruinsGate": {
+      "key": "gameOneBgRuinsGate"
+    },
+    "room_1": {
+      "key": "gameOneBgRoom1"
+    },
+    "room_3": {
+      "key": "gameOneBgRoom3"
+    },
+    "room_6": {
+      "key": "gameOneBgRoom6"
+    },
+    "room_10": {
+      "key": "gameOneBgRoom10"
+    }
+  },
+  "platforms": {
+    "grass": {
+      "key": "gameOnePlatformGrass",
+      "visualHeight": 61
+    },
+    "stone": {
+      "key": "gameOnePlatformStone",
+      "visualHeight": 63
+    },
+    "wood": {
+      "key": "gameOnePlatformWood",
+      "visualHeight": 58
+    }
+  },
+  "sounds": {
+    "coin": {
+      "key": "gameOneSoundCoin",
+      "volume": 0.7
+    },
+    "explosion": {
+      "key": "gameOneSoundExplosion",
+      "volume": 0.6
+    },
+    "hurt": {
+      "key": "gameOneSoundHurt",
+      "volume": 0.8
+    },
+    "jump": {
+      "key": "gameOneSoundJump",
+      "volume": 0.5
+    },
+    "powerUp": {
+      "key": "gameOneSoundPowerUp",
+      "volume": 0.7
+    },
+    "tap": {
+      "key": "gameOneSoundTap",
+      "volume": 0.5
+    },
+    "backgroundTrack2": {
+      "key": "gameOneBackgroundMusic2",
+      "volume": 0.38,
+      "loop": true
+    }
+  },
+  "slimeGreen": {
+    "key": "gameOneSlimeGreen",
+    "scale": 1.2,
+    "speed": 68,
+    "body": {
+      "width": 28,
+      "height": 28,
+      "offsetX": 18,
+      "offsetY": 18
+    }
+  },
+  "slimePurple": {
+    "key": "gameOneSlimePurple",
+    "scale": 1.2,
+    "speed": 72,
+    "body": {
+      "width": 28,
+      "height": 28,
+      "offsetX": 18,
+      "offsetY": 18
+    }
+  }
+}

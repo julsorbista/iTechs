@@ -1,0 +1,1015 @@
+﻿
+
+
+    
+    
+    
+    
+    Deep Research Implementation Brief for iTECHS PWA Pixel-UI Game
+
+    
+    Executive summary
+
+    The Google Drive folder contains four authoritative capstone documents (pre-proposal, approved scope/modules, progress report, security/project rubric). Together, they define iTECHS as a gamified e-learning platform for ICT students at Pasay City South High School, emphasizing secure authentication + role-based access control, admin-managed user records, game-based assessment, progress tracking, and AI-assisted hints that guide without revealing final answers. The rubric additionally requires secure CRUD, comprehensive validation, OTP verification, search/filter, and logging/monitoring of critical actions.
+
+    Your updated MultimodalText requirements refine the product into a landscape-first PWA with a pixel-art “game menu” UI, Admin-created accounts only, Teacher oversight (review/configure difficulty + star settings, not edit questions), a fixed 20-level progression per student, 3 expandable mini-games, AI-generated question packs pre-generated for each new student for all levels, and a stars-based per-level mastery system plus a separate correctness-based overall score. Cosmetics are profile-only and purchased with “star currency.”
+
+    For delivery speed with GitHub Copilot, the highest-leverage practice is to treat the UI as a small design system: define Figma components + variants + component properties, build with Auto Layout for responsive landscape panels, and map design tokens to code using Figma Variables + code syntax surfaced in Dev Mode. Figma explicitly positions Auto Layout as making designs “responsive and adaptable,” and Dev Mode as the developer handoff surface providing code snippets and variable-aware inspection. [1] If your Figma plan supports it, Code Connect can connect real React components to design components so Dev Mode shows connected snippets; Figma describes Code Connect as a bridge between codebase components and Dev Mode, improving implementation specificity and AI handoff via the MCP server. [2]
+
+    
+    
+    Google Drive inventory and key findings
+
+    
+    Files read from the Drive folder
+
+    File
+Type
+What it contributes to “exact requirements/assets”
+Copy of ICT of Pre proposal (iTECHS).docx (ID: 1iG2A5h2nrZEBM73FpOejzPafZ3HijJn7)
+Docx
+Context/rationale (manual checking/recording delays), objectives, scope & delimitation, emphasis on gamified activities, AI-randomized questions, self-paced learning.
+Copy of Approved Title Form V2.docx (ID: 1H6qvycwNqvMd2pMB6n5oZR_zM1Vt8-F6)
+Docx
+Approved scope/modules list for web + mobile; enumerates login/auth/access control, RBAC, user management CRUD, game assessment, progress tracking, feedback, AI hints/explanations.
+Copy of System Progress Report V2 (ID: 1wYToIo55qjJKlKJHtUNnVl19LzC7XPc0TnOI96pdJ24)
+Google Doc
+Operational security behaviors: OTP valid 10 minutes, login attempt limit 5 attempts then locked 10 minutes (noted under mobile update), role-based redirects.
+Copy of project rubric.pdf (ID: 1c89b3V7v9QXqbx8xAMF0bElR03OYxxdW)
+PDF
+Scoring rubric requirements: secure auth (hashing), RBAC authorization, secure CRUD w validation/pagination, OTP verification, search/filter, encryption/hashing, logging/monitoring, responsive UI.
+
+    
+    
+    Key requirements extracted from Drive docs
+
+    The Drive documents consistently frame iTECHS as a gamified e-learning platform and explicitly list these required modules and properties:
+
+    Authentication & authorization: secure login, password handling/hashing expectations, and role-based access control aligned to Admin/Teacher/Student.
+
+    Account verification: an OTP-based verification step and constraints around verification validity time and lockouts (progress report).
+
+    User management: administrator account creation and management, including edit/update and delete/deactivate/archive.
+
+    Game-based assessment: interactive, challenge-based activities with automatic generation of varied questions.
+
+    Progress tracking: view score history and completed lessons/levels.
+
+    Feedback & evaluation: instant feedback, correct/incorrect display, retry option.
+
+    AI hints/guidance: hints for learning activities and guided explanations that do not reveal the final answer.
+
+    The rubric further requires: input validation/sanitization, search/filter, logging and monitoring for critical actions like login attempts and data modifications, and a responsive UI.
+
+    
+    
+    Differences between Drive scope and your updated MultimodalText constraints
+
+    Topic
+Drive documents imply
+Your MultimodalText requirement
+PRD implementation stance
+Year level / sections
+Mentions year level & subject-based generation; “two subjects per year level” appears in scope/delimitation
+No year level/sections in product model; just students + teachers
+Use flat Level 1–20 model; treat “difficulty curve” as level-based. Keep “subject tags” optional metadata only.
+Mobile app
+Web + mobile described separately
+PWA (single codebase)
+PWA covers mobile installability while staying web-first.
+Teacher content editing
+Teachers review student progress
+Teachers cannot edit lessons/questions, but can review and adjust difficulty/star settings
+Implement teacher “policy knobs” and flag/regenerate flows, not question editing UI.
+
+    
+    
+    
+    UI reference analysis for a landscape-first pixel-art PWA
+
+    Your provided reference images establish the design language and key screens:
+
+    Admin Main Menu: pixel-art background, large “icon tile” buttons (“Learning Community”, “Add Student”, “Add Teacher”), profile badge (name/role/avatar), and a pixel “Logout” button.
+
+    Teacher Registration Form: modal/panel overlay with fields (first/last, username, email, password) and a “Register” CTA; implies reusable “panel form” component.
+
+    Archive Table: header row with columns (Name/Role/Email/Status/Last Login/Action), plus filter dropdown and search field; implies reusable “pixel table” component with search/filter.
+
+    Select Level: level cards with 1–N, star rating under each, lock icons for locked levels; implies “LevelCard” component with locked/unlocked/completed states.
+
+    My Profile / Cosmetics: avatar customization and tabs (Hair/Eyes/Mouth) with item price badges; implies inventory + equip states.
+
+    Mini-games HUD: hint button, star meter, level label, currency indicator.
+
+    UI style references collage
+
+    This UI direction maps cleanly to a “component library first” approach in Figma and React.
+
+    
+    
+    Figma research for pixel UI workflows and design-to-code mapping
+
+    
+    Using Auto Layout to make landscape UI reliably responsive
+
+    Figma’s Auto Layout is designed to make frames respond dynamically to content changes, “saving you time and making your designs responsive and adaptable.” [3]For a landscape-first PWA, this supports a consistent structure:
+
+    Outer “world background” frame: fixed background image; content overlays centered.
+
+    Inner “panel” frames: Auto Layout for header row (Back/Title/Search), body region, and footer controls.
+
+    Reusable “icon tile” buttons: Auto Layout horizontal/vertical to lock padding and label spacing consistently.
+
+    Recommended Figma practice for this project: - Every panel (forms, tables, level select) should be a component built on Auto Layout; instance text should be a text component property so content replaces cleanly without resizing artifacts.
+
+    
+    
+    Dev Mode and variable-aware handoff for Tailwind alignment
+
+    Figma Dev Mode provides code snippets in the Inspect panel and includes layout/typography details; it also surfaces variables assigned to elements inside code snippets. [4]For variable-heavy designs, Figma documents that Dev Mode includes features like Variable details (including mode/value/aliases and code snippet for using the variable). [5]
+
+    This matters because pixel UI needs consistent tokens for: - border thicknesses - panel padding - type sizes - shadows/outlines - star/currency colors
+
+    Figma supports code syntax for variables, intended to represent variables in code using valid names and appear in Dev Mode code snippets for supported contexts (CSS is relevant for Tailwind projects). [6]Figma also documents importing design tokens into variables using a JSON format (DTCG), which is relevant if you want to keep Tailwind theme tokens and Figma tokens aligned via a shared token source file. [7]
+
+    
+    
+    Mapping Figma components to React components with variants and component properties
+
+    Figma’s “variants” are designed to define component attributes like size, state, and color as “variant properties and values,” and Figma notes you can map properties/values to code components in your design system. [8]Figma’s component properties support instance-level edits via typed property controls (boolean visibility toggles, instance swaps, text props, variant selection). [9]
+
+    Best practice for your Copilot-ready workflow: - Build a Pixel UI component library in Figma using: - PixelButton variants: kind (primary/secondary/danger), state (default/hover/disabled), size (sm/md/lg) - PixelPanel variants: size and header on/off - IconTileButton variants: locked state and badge on/off - StarMeter variants: 0–3 filled - Use “text properties” for labels so designers can edit text without detaching components. [9]
+
+    
+    
+    Code Connect for higher-fidelity Figma-to-React mapping
+
+    If your plan allows it, Figma positions Code Connect as a bridge between your codebase components and Dev Mode, connecting repository components directly to design components, enhancing implementation detail and AI tooling context through the MCP server. [2]Figma also notes that Dev Mode’s default code snippets can be customized so developers see connected design system code instead of auto-generated code when inspecting components. [10]
+
+    For your GitHub Copilot usage, this can materially reduce ambiguity by ensuring: - Figma components expose real prop names (React) and variant mappings - Copilot prompts can reference component contracts rather than re-inventing them
+
+    
+    
+    Suggested Figma-native resources for a pixel-art setup
+
+    Because Figma Community pages are not accessible in this environment (robots restriction), the best available Figma-native resources you can cite and start from are:
+
+    Figma UI kits concept (curated libraries with components/styles/variables/example screens; Code Connect supported for UI kits): [11]
+
+    Auto Layout guide (responsive/adaptable behavior): [3]
+
+    Dev Mode overview and benefits (code snippets, component options, variables/tokens): [12]
+
+    Variables in Dev Mode (details, alias chain, snippet): [5]
+
+    Design token import into variables (DTCG JSON): [7]
+
+    Pixel fonts available directly in Figma Fonts:
+
+    Tiny5 [13]
+
+    Sixtyfour [14]
+
+    Jersey 15 [15]
+
+    Micro 5 [16]
+
+    Game-oriented prototyping acceleration:
+
+    Figma “AI game generator” positioning (rapid playable prototypes using your existing components/styles/tokens): [17]
+
+    
+    
+    
+    System flow and level assignment logic diagrams
+
+    
+    High-level system flow
+
+    flowchart TD  A[Admin creates Teacher/Student accounts] --> B[System sends OTP / activation]  B --> C{OTP verified within validity window?}  C -- No --> C1[Activation fails / retry OTP]  C -- Yes --> D[Account activated]  D --> E[If Student: provision profile + wallet + 20 levels]  E --> F[AI job generates QuestionPack for Levels 1-20]  F --> G{All packs READY?}  G -- No --> G1[Mark failed levels; allow Admin regen]  G -- Yes --> H[Student can play Level 1]  H --> I[Student starts Level session]  I --> J[Load assigned GameMode + QuestionPack]  J --> K[In-game: answer questions; mistakes + hints tracked]  K --> L[Compute stars + score for attempt]  L --> M[Persist GameSession + update StudentLevelState]  M --> N[Unlock next level if criteria met]  M --> O[Update Teacher/Admin dashboards + leaderboards]
+
+    
+    
+    Level → game assignment logic
+
+    flowchart TD  A[Provision new Student] --> B[Define LevelPairs: (1-2),(3-4)...(19-20)]  B --> C[Initialize previousGame = NONE]  C --> D{For each LevelPair}  D --> E[Candidate games = {A,B,C} minus previousGame]  E --> F[Select game from candidates using balanced random (shuffle bag)]  F --> G[Assign game to both levels in the pair]  G --> H[previousGame = selected game]  H --> D  D --> I[Persist LevelGameAssignment(studentId, levelNumber, gameMode)]
+
+    
+    
+    
+    Milestone breakdown and execution plan
+
+    
+    Milestone breakdown table
+
+    Sprint/Milestone
+Outcome
+Primary deliverables
+Dependencies
+Effort
+Sprint 0
+Foundations + design system
+Figma component library (pixel UI), repo scaffolding, Prisma schema draft, baseline routes
+Drive scope/rubric alignment
+M
+Sprint 1
+Auth + RBAC + Admin user ops
+OTP activation, 5-attempt lockout, role redirects, Admin create/assign/archive/search
+Sprint 0
+L
+Sprint 2
+Student progression backbone
+Level 1–20 states, game assignment, session start/submit, stars+score rules
+Sprint 1
+L
+Sprint 3
+AI provisioning pipeline
+Student provisioning job generates Level 1–20 question packs and persists
+Sprint 2 data models
+L
+Sprint 4
+Mini-games MVP (3 games)
+Hardware match, CPU assembly, jigsaw + follow-up questions; shared HUD
+Sprint 2 + Sprint 3
+L
+Sprint 5
+Teacher dashboards + leaderboards
+Teacher roster, student detail, per-roster leaderboard; Admin global leaderboard
+Sprint 4
+M
+Sprint 6
+Cosmetics shop + PWA polish
+Star-currency wallet, cosmetics purchase/equip, installability, caching, QA
+Prior sprints
+M
+
+    
+    
+    Final detailed task checklist (no code)
+
+    Legend: Priority P0 (must), P1 (should), P2 (nice). Owner = Admin / Backend / Frontend / AI / Design. Effort = S/M/L.
+
+    ID
+Sprint
+Priority
+Task
+Acceptance criteria
+Dependencies
+Effort
+Owner
+D-01
+0
+P0
+Create Figma “Pixel UI” component library using variants
+Buttons/panels/tables/level cards/avatar tabs exist as components with variants and text props
+None
+M
+Design
+D-02
+0
+P0
+Apply Auto Layout to all panel components
+Panels resize without breaking alignment on different landscape widths
+D-01
+M
+Design
+D-03
+0
+P1
+Define Variables collections for pixel tokens
+Colors/spacing/radius/outline stored as variables; documented naming scheme
+D-01
+M
+Design
+D-04
+0
+P1
+Add variable code syntax for web/CSS
+Variables display meaningful code syntax in Dev Mode snippets
+D-03
+M
+Design
+D-05
+0
+P2
+Evaluate Code Connect feasibility
+Decision recorded: plan supports/doesn’t; if yes, mapping approach selected
+Repo exists
+S
+Admin + Frontend
+B-01
+1
+P0
+Implement secure login + password validation
+Login works; invalid creds rejected; password policy enforced; hashing used
+Sprint 0 schema
+L
+Backend
+B-02
+1
+P0
+OTP activation flow
+Admin-created account must verify OTP before first login; OTP expires per product setting
+B-01
+L
+Backend
+B-03
+1
+P0
+Login attempt limit + lockout
+After 5 failed logins, locked 10 minutes; audit logged
+B-01
+M
+Backend
+B-04
+1
+P0
+RBAC middleware on API
+Admin/Teacher/Student access restricted per endpoint; tests or checks demonstrate coverage
+B-01
+M
+Backend
+B-05
+1
+P0
+Admin creates Teacher/Student accounts
+Admin UI creates accounts; email/OTP triggered; record appears in user list
+B-02
+M
+Backend + Frontend
+B-06
+1
+P0
+Admin archives/deactivates accounts
+Archived users cannot login; list shows status; action audit logged
+B-05
+M
+Backend + Frontend
+B-07
+1
+P1
+Admin search/filter users
+Search by name/email; filter by role/status; paginated results
+B-05
+M
+Backend + Frontend
+B-08
+1
+P0
+Admin assigns students to teacher roster
+Teacher sees assigned students only; admin can reassign
+B-05
+M
+Backend + Frontend
+P-01
+2
+P0
+Student level state model (1–20)
+New student has locked/unlocked states; Level 1 unlocked; others locked
+B-05
+M
+Backend
+P-02
+2
+P0
+Level pair game assignment
+Levels assigned per pair; no consecutive game repeats; persisted
+P-01
+M
+Backend
+P-03
+2
+P0
+Start level session API
+Student can start level only if unlocked; creates GameSession
+P-01
+M
+Backend
+P-04
+2
+P0
+Submit session result API
+Stores mistakes, hintsUsed, starsEnd, scoreAwarded; updates level state
+P-03
+L
+Backend
+P-05
+2
+P0
+Star rules engine
+3-start baseline; 3 free mistakes; extra mistakes reduce stars; hint reduces 1 star immediately; 0 stars = fail
+P-04
+M
+Backend
+P-06
+2
+P0
+Score award model (correctness-based)
+Score uses correctness; retries reduce max achievable score for new attempt but not historical points
+P-04
+M
+Backend
+P-07
+2
+P1
+Level unlock criteria
+Next level unlocks on completion with ≥1 star; locked indicator correct
+P-04
+S
+Backend
+AI-01
+3
+P0
+Provisioning job: generate 20 QuestionPacks per student
+On student creation, packs generated and stored for levels 1–20
+P-01, P-02
+L
+AI + Backend
+AI-02
+3
+P0
+Question schema supports mixed types
+Majority identification but can store MCQ/matching/etc; validated structure
+AI-01
+M
+AI + Backend
+AI-03
+3
+P0
+Hint generation and “no final answer” rule
+Hint text guides; doesn’t reveal final answers; hint usage tracked
+AI-01
+M
+AI
+AI-04
+3
+P1
+Regeneration workflow
+Teacher/Admin can flag a level pack and trigger regeneration without editing questions
+AI-01
+M
+Backend + Frontend
+G-01
+4
+P0
+Shared game HUD component
+Shows stars remaining, hint button, level label, and currency
+P-05
+M
+Frontend
+G-02
+4
+P0
+Game A: Hardware parts matching
+Drag labels to targets; correctness tracked; integrates with session submit
+G-01, AI-02
+L
+Frontend
+G-03
+4
+P0
+Game B: CPU assembly DnD
+Parts snap into slots; incorrect placements count as mistakes
+G-01, AI-02
+L
+Frontend
+G-04
+4
+P0
+Game C: Jigsaw + follow-up questions
+Puzzle completion triggers identification questions; hint reduces star
+G-01, AI-02
+L
+Frontend
+G-05
+4
+P1
+Prevent consecutive game repetition
+UI confirms appropriate game per level; assignment logic validated
+P-02
+S
+Backend + Frontend
+T-01
+5
+P0
+Teacher roster dashboard
+Teacher sees assigned students list; searchable
+B-08
+M
+Frontend + Backend
+T-02
+5
+P0
+Teacher student detail view
+Shows per-level stars, attempts, last played; score history
+P-04
+M
+Frontend + Backend
+T-03
+5
+P1
+Teacher policy knobs
+Teacher can adjust allowed difficulty/star parameters within admin-defined bounds
+P-05
+M
+Backend + Frontend
+L-01
+5
+P0
+Leaderboard per teacher roster
+Ranks teacher’s students by overall score or progress; clear tie-break rules
+T-01
+M
+Backend + Frontend
+L-02
+5
+P1
+Admin global leaderboard
+Admin sees all students ranking; filterable
+B-07
+M
+Backend + Frontend
+S-01
+6
+P0
+Wallet + star currency ledger
+Balance updates; all changes in transaction table
+P-04
+M
+Backend
+S-02
+6
+P0
+Cosmetics catalog + purchase flow
+Cosmetics-only items; buy with star currency; cannot go negative
+S-01
+M
+Backend + Frontend
+S-03
+6
+P0
+Equip cosmetics
+Equipped state persisted; avatar preview reflects equipment
+S-02
+M
+Frontend
+PWA-01
+6
+P0
+PWA installability
+Manifest + icons + install prompt; works offline for static assets
+UI done
+M
+Frontend
+SEC-01
+6
+P0
+Audit logs for critical actions
+Login attempts, lockouts, user changes, session submissions, purchases recorded
+B-03, B-06, P-04, S-02
+M
+Backend
+QA-01
+6
+P0
+End-to-end QA matrix
+All flows pass on desktop + mobile landscape; no broken scaling; key errors handled
+All
+L
+Admin + QA (or all)
+
+    
+    
+    
+    API surface checklist table
+
+    Area
+Endpoint
+Method
+Auth role
+Purpose
+Acceptance checks
+Auth
+/auth/login
+POST
+Public
+Login with email/password
+Lockout triggers after 5 fails; success sets session/token
+Auth
+/auth/request-otp
+POST
+Admin/Public
+Send OTP for activation/reset (as configured)
+OTP stored hashed; expiration enforced
+Auth
+/auth/verify-otp
+POST
+Public
+Verify OTP and activate account
+Reject expired/used codes; activate user
+Admin
+/admin/users
+POST
+Admin
+Create Teacher/Student
+Creates correct role; triggers OTP; audit log
+Admin
+/admin/users
+GET
+Admin
+Search/filter/paginate users
+Filters correct; pagination stable
+Admin
+/admin/users/:id
+PATCH
+Admin
+Update status/profile
+Archived cannot login; audit log
+Admin
+/admin/assignments
+POST
+Admin
+Assign student to teacher
+Teacher roster updates immediately
+Teacher
+/teacher/students
+GET
+Teacher
+List assigned students
+No leakage of unassigned students
+Teacher
+/teacher/students/:id
+GET
+Teacher
+Student detail and progress
+Shows levels, stars, attempts, recent activity
+Teacher
+/teacher/students/:id/settings
+PATCH
+Teacher
+Adjust difficulty/star policy
+Enforced bounds; audit log
+Gameplay
+/student/levels
+GET
+Student
+List 1–20 levels w lock/stars
+Correct lock status/unlocks
+Gameplay
+/student/levels/:n/start
+POST
+Student
+Start GameSession
+Only if unlocked; returns gameMode + pack metadata
+Gameplay
+/student/sessions/:id/submit
+POST
+Student
+Submit attempt outcomes
+Stars/score computed server-side; updates level
+AI
+/admin/students/:id/regenerate/:level
+POST
+Admin
+Regen question pack
+Status transitions tracked
+Leaderboard
+/teacher/leaderboard
+GET
+Teacher
+Roster leaderboard
+Rank rules correct; filters optional
+Leaderboard
+/admin/leaderboard
+GET
+Admin
+Global leaderboard
+Search/filter; excludes inactive if requested
+Shop
+/student/shop/items
+GET
+Student
+Cosmetics list
+Only active items; price displayed
+Shop
+/student/shop/purchase
+POST
+Student
+Buy cosmetic
+Balance check; idempotency; ledger entry
+Profile
+/student/profile/equip
+PATCH
+Student
+Equip owned cosmetics
+Must own item; updates equipped state
+
+    
+    
+    Prisma model checklist table
+
+    Model
+Purpose
+Key fields
+Relations
+Acceptance checks
+User
+Identity and auth
+id, email, username, passwordHash, role, status, lastLoginAt
+1–1 Student/Teacher profile
+Unique email; status prevents login
+OtpToken
+OTP verification
+userId, codeHash, purpose, expiresAt, usedAt
+User
+Expiration + one-time use enforced
+LoginAttempt
+Lockout tracking
+userId/email, ip, success, createdAt
+User optional
+Lockout triggers after threshold
+TeacherStudentAssignment
+“Class” equivalent
+teacherId, studentId, status
+User(Teacher), User(Student)
+Teacher views only assigned
+StudentLevelState
+Level 1–20 progression
+studentId, levelNumber, status, bestStars, bestScore, attemptsCount
+Student
+Unlock logic correct
+LevelGameAssignment
+Fixed game per level
+studentId, levelNumber, gameMode
+Student
+No consecutive repetition for level pairs
+QuestionPack
+Stored AI pack per level
+studentId, levelNumber, gameMode, status, generatedAt, metadata
+Student → Questions
+Exists for all 20 levels after provisioning
+Question
+Flexible question entries
+type, prompt, correctAnswer, explanation
+QuestionPack
+Supports identification-first mix
+QuestionOption
+MCQ options
+text, isCorrect
+Question
+Present only for MCQ types
+GameSession
+Attempt record
+studentId, levelNumber, startedAt, endedAt, mistakes, hintsUsed, starsEnd, scoreAwarded
+Student
+Immutable history
+Wallet
+Star currency balance
+studentId, balance
+Student → Transactions
+Cannot go negative
+CurrencyTransaction
+Ledger
+delta, reason, sessionId?, createdAt
+Wallet
+Full auditability
+CosmeticItem
+Shop catalog
+category, price, status
+Purchases, Inventory
+Cosmetics-only
+InventoryItem
+Ownership
+studentId, cosmeticId
+Student
+Prevent double-own if configured
+EquippedCosmetics
+Loadout
+studentId, hairId, eyesId, etc.
+Inventory
+Equip only owned items
+AuditLog
+Security/ops logging
+actorId, action, entityType, entityId, metaJson, createdAt
+User
+Records critical actions
+
+    
+    
+    Game feature checklist table
+
+    Feature
+Scope
+Acceptance criteria
+Priority
+Fixed 20-level progression
+Per student
+Levels 1–20 exist; Level 1 unlocked; unlocks follow completion rules
+P0
+Level pair game assignment
+Per student
+Every 2 levels share a game; no consecutive repeats; persisted
+P0
+Stars system
+Per attempt
+Start 3; 3 free mistakes; extra mistakes reduce stars; hint reduces 1 star immediately; 0 stars fail
+P0
+Score system
+Per attempt + overall
+Correctness-based; retries reduce max achievable for future attempts (not subtract history)
+P0
+AI pre-generation
+Per student
+On student create, generates packs for all 20 levels and stores in DB
+P0
+Mixed question types
+Per question pack
+Majority identification; supports additional types via schema
+P0
+Game A: Desktop hardware matching
+Mini-game
+DnD labels to objects; mistakes tracked; hint impacts stars
+P0
+Game B: CPU/internal assembly
+Mini-game
+DnD parts snap to slots; wrong placements counted as mistakes
+P0
+Game C: Jigsaw + ID questions
+Mini-game
+Puzzle completion triggers questions; hint reduces star
+P0
+Teacher roster leaderboard
+Teacher view
+Leaderboard only for assigned students; rank rules consistent
+P0
+Admin global leaderboard
+Admin view
+Sees all students; filter/search
+P1
+Cosmetics shop
+Student
+Buy/equip cosmetics using star currency; no gameplay effect
+P0
+Archive/admin search
+Admin
+User archive list and filter/search present; matches UI reference
+P1
+
+    
+    
+    Figma resources and concrete design-to-React+Tailwind mapping guidance
+
+    
+    Figma resources to use for this project
+
+    Auto Layout and responsive panels - Auto Layout guide: use on frames so designs respond dynamically and stay responsive/adaptable. [3]- Optional Auto Layout toggling workflows (shortcut and panel actions) can speed iteration. [18]
+
+    Dev Mode handoff - Dev Mode overview positioning: component options + variables/tokens for consistency. [12]- Dev Mode code snippets: code section in Inspect, and variables appear in snippets; supports smoother handoff. [4]- Variables in Dev Mode: variable details include mode/value/alias chain and a code snippet. [5]
+
+    Tokens and code syntax - Creating/managing variables and collections includes “Add code syntax” to show variable code syntax in Dev Mode for CSS. [19]- Variable modes and importing design tokens (DTCG JSON) enable maintaining token parity with code. [7]
+
+    Componentization - Variants: define properties (size/state/etc.) and values; use for scalable component systems. [8]- Component properties: text/boolean/instance swap/variant props allow safe customization without detaching. [9]
+
+    Optional: Code Connect - Code Connect overview and developer docs: connect React components to Figma components so Dev Mode shows connected snippets. [2]
+
+    Pixel fonts directly in Figma - Tiny5 [13], Sixtyfour [14], Jersey 15 [15], Micro 5 [16]
+
+    
+    
+    Best-practice mapping pattern for React + Tailwind in a pixel game UI
+
+    Figma construct
+How to define it in Figma
+How it maps to React + Tailwind for a PWA game UI
+Components
+Create PixelButton, PixelPanel, PixelTable, LevelCard, StarMeter, HUD, IconTile
+React components with consistent props; Tailwind classes implement layout; CSS variables handle pixel theming
+Variants
+Use kind, size, state, locked, hasBadge
+React props become kind/size/state unions; Tailwind uses conditional class composition
+Component properties
+Text props for labels; boolean visibility for badges; instance swaps for icons
+Ensures designers change labels/icons without detaching; React mirrors those as props
+Auto Layout
+Use Auto Layout for all panels and button groups
+Maps to Tailwind flex, gap, p-*, alignment utilities; stable resizing for landscape
+Variables + code syntax
+Store colors/spacing/radius as variables and set CSS code syntax
+Maps to Tailwind theme tokens or CSS custom properties; Dev Mode shows correct token usage in snippets [6]
+Dev Mode Inspect
+Use Dev Mode to copy snippets and verify tokens
+Developers validate spacing/typography/variables directly from Inspect [20]
+Code Connect (optional)
+Link Figma components to code components
+Dev Mode shows production-like snippets for React components [2]
+
+    
+    
+    Practical “pixel UI” component set you should build first in Figma
+
+    To maximize Copilot usefulness, build these first (they correspond directly to your reference screens):
+
+    PixelPanel/Headered (supports Back button, Title, right-side controls)
+
+    PixelButton (primary/secondary/danger; disabled)
+
+    IconTileButton (with icon slot + label; hover/active)
+
+    PixelTable (header row, row slots, actionable last column)
+
+    SearchField + FilterDropdown (pixel style)
+
+    LevelCard (number + star rating + locked state)
+
+    StarMeter (0–3)
+
+    HintButton (with “costs 1 star” warning pattern)
+
+    AvatarCard + CosmeticsTabs (Hair/Eyes/Mouth)
+
+    This is the smallest set that covers admin menu, forms, archive table, level select, profile/cosmetics, and in-game HUD.
+
+    
+    
+    
+    
+    
+
+    
+    [1] [3] Guide to auto layout – Figma Learn - Help Center
+
+    https://help.figma.com/hc/en-us/articles/360040451373-Explore-auto-layout-properties?utm_source=chatgpt.com
+
+    [2] Code Connect – Figma Learn - Help Center
+
+    https://help.figma.com/hc/en-us/articles/23920389749655-Code-Connect?utm_source=chatgpt.com
+
+    [4] [10] [20] Use code snippets in Dev Mode – Figma Learn - Help Center
+
+    https://help.figma.com/hc/en-us/articles/15023202277399-Use-code-snippets-in-Dev-Mode?utm_source=chatgpt.com
+
+    [5] Variables in Dev Mode – Figma Learn - Help Center
+
+    https://help.figma.com/hc/en-us/articles/27882809912471-Variables-in-Dev-Mode?utm_source=chatgpt.com
+
+    [6] [19] Create and manage variables and collections – Figma Learn - Help Center
+
+    https://help.figma.com/hc/en-us/articles/15145852043927-Create-and-manage-variables-and-collections?utm_source=chatgpt.com
+
+    [7] Modes for variables – Figma Learn - Help Center
+
+    https://help.figma.com/hc/en-us/articles/15343816063383-Modes-for-variables?utm_source=chatgpt.com
+
+    [8] Create and use variants – Figma Learn - Help Center
+
+    https://help.figma.com/hc/en-us/articles/360056440594-Create-and-use-variants?utm_source=chatgpt.com
+
+    [9] Edit instances with component properties – Figma Learn - Help Center
+
+    https://help.figma.com/hc/en-us/articles/8883757553943-Edit-instances-with-component-properties?utm_source=chatgpt.com
+
+    [11] Start designing with UI kits – Figma Learn - Help Center
+
+    https://help.figma.com/hc/en-us/articles/24037724065943-Start-designing-with-UI-kits?utm_source=chatgpt.com
+
+    [12] Dev Mode: Design-to-Development | Figma
+
+    https://www.figma.com/dev-mode/?utm_source=chatgpt.com
+
+    [13] Tiny5 Font | Figma
+
+    https://www.figma.com/fonts/tiny5/?utm_source=chatgpt.com
+
+    [14] Sixtyfour Font | Figma
+
+    https://www.figma.com/fonts/sixtyfour/?utm_source=chatgpt.com
+
+    [15] Jersey 15 Font | Figma
+
+    https://www.figma.com/fonts/jersey-15/?utm_source=chatgpt.com
+
+    [16] Micro 5 Font | Figma
+
+    https://www.figma.com/fonts/micro-5/?utm_source=chatgpt.com
+
+    [17] AI Game Generator: Design & Prototype Games Faster | Figma
+
+    https://www.figma.com/solutions/ai-game-generator/?utm_source=chatgpt.com
+
+    [18] Toggle on auto layout in designs – Figma Learn - Help Center
+
+    https://help.figma.com/hc/en-us/articles/5731482952599-Toggle-auto-layout-on-designs?utm_source=chatgpt.com
+
+    
+    
+      
+        
+                
+        
+        
+              
+      
+    
+  
+
+

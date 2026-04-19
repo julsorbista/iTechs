@@ -1,0 +1,794 @@
+﻿[
+    {
+        "sourceFile":  "Mossy - BackgroundDecoration.png",
+        "sourceWidth":  4096,
+        "sourceHeight":  4096,
+        "objectCount":  6,
+        "minPixels":  260,
+        "minWidth":  12,
+        "minHeight":  12,
+        "mergeGap":  18,
+        "padding":  4,
+        "maskMode":  0,
+        "ignoreDarkThreshold":  0,
+        "outputDirectory":  "C:\\Users\\sean\\Desktop\\CODE\\iTECHS\\Frontend\\assets\\2d_platform\\Mossy Tileset\\processed\\mossy-backgrounddecoration",
+        "objects":  [
+                        {
+                            "fileName":  "mossy-backgrounddecoration-object-001.png",
+                            "x":  12,
+                            "y":  41,
+                            "width":  1058,
+                            "height":  4037,
+                            "pixelCount":  3063380
+                        },
+                        {
+                            "fileName":  "mossy-backgrounddecoration-object-002.png",
+                            "x":  1189,
+                            "y":  41,
+                            "width":  1044,
+                            "height":  2354,
+                            "pixelCount":  1669464
+                        },
+                        {
+                            "fileName":  "mossy-backgrounddecoration-object-003.png",
+                            "x":  2670,
+                            "y":  122,
+                            "width":  1095,
+                            "height":  1010,
+                            "pixelCount":  801658
+                        },
+                        {
+                            "fileName":  "mossy-backgrounddecoration-object-004.png",
+                            "x":  2379,
+                            "y":  1406,
+                            "width":  1691,
+                            "height":  918,
+                            "pixelCount":  1177530
+                        },
+                        {
+                            "fileName":  "mossy-backgrounddecoration-object-005.png",
+                            "x":  2391,
+                            "y":  2356,
+                            "width":  1695,
+                            "height":  1734,
+                            "pixelCount":  1905931
+                        },
+                        {
+                            "fileName":  "mossy-backgrounddecoration-object-006.png",
+                            "x":  1210,
+                            "y":  2606,
+                            "width":  932,
+                            "height":  652,
+                            "pixelCount":  447698
+                        }
+                    ]
+    },
+    {
+        "sourceFile":  "Mossy - Decorations\u0026Hazards.png",
+        "sourceWidth":  4096,
+        "sourceHeight":  4096,
+        "objectCount":  28,
+        "minPixels":  180,
+        "minWidth":  10,
+        "minHeight":  10,
+        "mergeGap":  16,
+        "padding":  4,
+        "maskMode":  0,
+        "ignoreDarkThreshold":  0,
+        "outputDirectory":  "C:\\Users\\sean\\Desktop\\CODE\\iTECHS\\Frontend\\assets\\2d_platform\\Mossy Tileset\\processed\\mossy-decorations-hazards",
+        "objects":  [
+                        {
+                            "fileName":  "mossy-decorations-hazards-object-001.png",
+                            "x":  2888,
+                            "y":  4,
+                            "width":  1063,
+                            "height":  924,
+                            "pixelCount":  548923
+                        },
+                        {
+                            "fileName":  "mossy-decorations-hazards-object-002.png",
+                            "x":  228,
+                            "y":  187,
+                            "width":  1292,
+                            "height":  715,
+                            "pixelCount":  617337
+                        },
+                        {
+                            "fileName":  "mossy-decorations-hazards-object-003.png",
+                            "x":  1600,
+                            "y":  393,
+                            "width":  1148,
+                            "height":  524,
+                            "pixelCount":  455128
+                        },
+                        {
+                            "fileName":  "mossy-decorations-hazards-object-004.png",
+                            "x":  120,
+                            "y":  956,
+                            "width":  1484,
+                            "height":  637,
+                            "pixelCount":  340722
+                        },
+                        {
+                            "fileName":  "mossy-decorations-hazards-object-005.png",
+                            "x":  2061,
+                            "y":  967,
+                            "width":  1235,
+                            "height":  818,
+                            "pixelCount":  338987
+                        },
+                        {
+                            "fileName":  "mossy-decorations-hazards-object-006.png",
+                            "x":  429,
+                            "y":  1629,
+                            "width":  928,
+                            "height":  861,
+                            "pixelCount":  330957
+                        },
+                        {
+                            "fileName":  "mossy-decorations-hazards-object-007.png",
+                            "x":  1660,
+                            "y":  1888,
+                            "width":  465,
+                            "height":  432,
+                            "pixelCount":  87438
+                        },
+                        {
+                            "fileName":  "mossy-decorations-hazards-object-008.png",
+                            "x":  2339,
+                            "y":  1888,
+                            "width":  618,
+                            "height":  411,
+                            "pixelCount":  89677
+                        },
+                        {
+                            "fileName":  "mossy-decorations-hazards-object-009.png",
+                            "x":  3160,
+                            "y":  1935,
+                            "width":  749,
+                            "height":  324,
+                            "pixelCount":  91062
+                        },
+                        {
+                            "fileName":  "mossy-decorations-hazards-object-010.png",
+                            "x":  3717,
+                            "y":  2543,
+                            "width":  256,
+                            "height":  1511,
+                            "pixelCount":  233536
+                        },
+                        {
+                            "fileName":  "mossy-decorations-hazards-object-011.png",
+                            "x":  3105,
+                            "y":  2557,
+                            "width":  429,
+                            "height":  1488,
+                            "pixelCount":  244963
+                        },
+                        {
+                            "fileName":  "mossy-decorations-hazards-object-012.png",
+                            "x":  2603,
+                            "y":  2559,
+                            "width":  436,
+                            "height":  1484,
+                            "pixelCount":  247896
+                        },
+                        {
+                            "fileName":  "mossy-decorations-hazards-object-013.png",
+                            "x":  2109,
+                            "y":  2562,
+                            "width":  420,
+                            "height":  1474,
+                            "pixelCount":  246293
+                        },
+                        {
+                            "fileName":  "mossy-decorations-hazards-object-014.png",
+                            "x":  653,
+                            "y":  2621,
+                            "width":  282,
+                            "height":  387,
+                            "pixelCount":  29592
+                        },
+                        {
+                            "fileName":  "mossy-decorations-hazards-object-015.png",
+                            "x":  1231,
+                            "y":  2625,
+                            "width":  158,
+                            "height":  369,
+                            "pixelCount":  18503
+                        },
+                        {
+                            "fileName":  "mossy-decorations-hazards-object-016.png",
+                            "x":  93,
+                            "y":  2636,
+                            "width":  297,
+                            "height":  266,
+                            "pixelCount":  37568
+                        },
+                        {
+                            "fileName":  "mossy-decorations-hazards-object-017.png",
+                            "x":  1575,
+                            "y":  2730,
+                            "width":  140,
+                            "height":  177,
+                            "pixelCount":  11880
+                        },
+                        {
+                            "fileName":  "mossy-decorations-hazards-object-018.png",
+                            "x":  1724,
+                            "y":  2736,
+                            "width":  301,
+                            "height":  183,
+                            "pixelCount":  24161
+                        },
+                        {
+                            "fileName":  "mossy-decorations-hazards-object-019.png",
+                            "x":  1421,
+                            "y":  2931,
+                            "width":  147,
+                            "height":  183,
+                            "pixelCount":  13798
+                        },
+                        {
+                            "fileName":  "mossy-decorations-hazards-object-020.png",
+                            "x":  1595,
+                            "y":  3069,
+                            "width":  412,
+                            "height":  456,
+                            "pixelCount":  104917
+                        },
+                        {
+                            "fileName":  "mossy-decorations-hazards-object-021.png",
+                            "x":  66,
+                            "y":  3072,
+                            "width":  365,
+                            "height":  449,
+                            "pixelCount":  38794
+                        },
+                        {
+                            "fileName":  "mossy-decorations-hazards-object-022.png",
+                            "x":  1166,
+                            "y":  3100,
+                            "width":  180,
+                            "height":  416,
+                            "pixelCount":  23714
+                        },
+                        {
+                            "fileName":  "mossy-decorations-hazards-object-023.png",
+                            "x":  614,
+                            "y":  3176,
+                            "width":  307,
+                            "height":  235,
+                            "pixelCount":  37767
+                        },
+                        {
+                            "fileName":  "mossy-decorations-hazards-object-024.png",
+                            "x":  570,
+                            "y":  3569,
+                            "width":  264,
+                            "height":  483,
+                            "pixelCount":  33400
+                        },
+                        {
+                            "fileName":  "mossy-decorations-hazards-object-025.png",
+                            "x":  215,
+                            "y":  3582,
+                            "width":  109,
+                            "height":  458,
+                            "pixelCount":  15959
+                        },
+                        {
+                            "fileName":  "mossy-decorations-hazards-object-026.png",
+                            "x":  1595,
+                            "y":  3614,
+                            "width":  375,
+                            "height":  407,
+                            "pixelCount":  72505
+                        },
+                        {
+                            "fileName":  "mossy-decorations-hazards-object-027.png",
+                            "x":  1254,
+                            "y":  3628,
+                            "width":  93,
+                            "height":  404,
+                            "pixelCount":  12886
+                        },
+                        {
+                            "fileName":  "mossy-decorations-hazards-object-028.png",
+                            "x":  877,
+                            "y":  3640,
+                            "width":  70,
+                            "height":  407,
+                            "pixelCount":  12730
+                        }
+                    ]
+    },
+    {
+        "sourceFile":  "Mossy - FloatingPlatforms.png",
+        "sourceWidth":  2048,
+        "sourceHeight":  2048,
+        "objectCount":  8,
+        "minPixels":  120,
+        "minWidth":  16,
+        "minHeight":  8,
+        "mergeGap":  12,
+        "padding":  4,
+        "maskMode":  0,
+        "ignoreDarkThreshold":  0,
+        "outputDirectory":  "C:\\Users\\sean\\Desktop\\CODE\\iTECHS\\Frontend\\assets\\2d_platform\\Mossy Tileset\\processed\\mossy-floatingplatforms",
+        "objects":  [
+                        {
+                            "fileName":  "mossy-floatingplatforms-object-001.png",
+                            "x":  474,
+                            "y":  31,
+                            "width":  1058,
+                            "height":  460,
+                            "pixelCount":  370823
+                        },
+                        {
+                            "fileName":  "mossy-floatingplatforms-object-002.png",
+                            "x":  1590,
+                            "y":  40,
+                            "width":  457,
+                            "height":  950,
+                            "pixelCount":  333430
+                        },
+                        {
+                            "fileName":  "mossy-floatingplatforms-object-003.png",
+                            "x":  111,
+                            "y":  46,
+                            "width":  266,
+                            "height":  327,
+                            "pixelCount":  59413
+                        },
+                        {
+                            "fileName":  "mossy-floatingplatforms-object-004.png",
+                            "x":  493,
+                            "y":  533,
+                            "width":  1058,
+                            "height":  460,
+                            "pixelCount":  370823
+                        },
+                        {
+                            "fileName":  "mossy-floatingplatforms-object-005.png",
+                            "x":  43,
+                            "y":  537,
+                            "width":  389,
+                            "height":  378,
+                            "pixelCount":  109121
+                        },
+                        {
+                            "fileName":  "mossy-floatingplatforms-object-006.png",
+                            "x":  433,
+                            "y":  1090,
+                            "width":  1570,
+                            "height":  460,
+                            "pixelCount":  568313
+                        },
+                        {
+                            "fileName":  "mossy-floatingplatforms-object-007.png",
+                            "x":  108,
+                            "y":  1105,
+                            "width":  292,
+                            "height":  284,
+                            "pixelCount":  51935
+                        },
+                        {
+                            "fileName":  "mossy-floatingplatforms-object-008.png",
+                            "x":  16,
+                            "y":  1561,
+                            "width":  2022,
+                            "height":  460,
+                            "pixelCount":  744381
+                        }
+                    ]
+    },
+    {
+        "sourceFile":  "Mossy - Hanging Plants.png",
+        "sourceWidth":  2048,
+        "sourceHeight":  2948,
+        "objectCount":  7,
+        "minPixels":  90,
+        "minWidth":  6,
+        "minHeight":  18,
+        "mergeGap":  12,
+        "padding":  4,
+        "maskMode":  0,
+        "ignoreDarkThreshold":  0,
+        "outputDirectory":  "C:\\Users\\sean\\Desktop\\CODE\\iTECHS\\Frontend\\assets\\2d_platform\\Mossy Tileset\\processed\\mossy-hanging-plants",
+        "objects":  [
+                        {
+                            "fileName":  "mossy-hanging-plants-object-001.png",
+                            "x":  1664,
+                            "y":  100,
+                            "width":  275,
+                            "height":  957,
+                            "pixelCount":  129954
+                        },
+                        {
+                            "fileName":  "mossy-hanging-plants-object-002.png",
+                            "x":  513,
+                            "y":  111,
+                            "width":  371,
+                            "height":  984,
+                            "pixelCount":  135954
+                        },
+                        {
+                            "fileName":  "mossy-hanging-plants-object-003.png",
+                            "x":  1304,
+                            "y":  113,
+                            "width":  312,
+                            "height":  828,
+                            "pixelCount":  99855
+                        },
+                        {
+                            "fileName":  "mossy-hanging-plants-object-004.png",
+                            "x":  909,
+                            "y":  115,
+                            "width":  370,
+                            "height":  984,
+                            "pixelCount":  137785
+                        },
+                        {
+                            "fileName":  "mossy-hanging-plants-object-005.png",
+                            "x":  109,
+                            "y":  117,
+                            "width":  371,
+                            "height":  1185,
+                            "pixelCount":  158225
+                        },
+                        {
+                            "fileName":  "mossy-hanging-plants-object-006.png",
+                            "x":  713,
+                            "y":  1116,
+                            "width":  1275,
+                            "height":  1751,
+                            "pixelCount":  563069
+                        },
+                        {
+                            "fileName":  "mossy-hanging-plants-object-007.png",
+                            "x":  85,
+                            "y":  1396,
+                            "width":  474,
+                            "height":  1383,
+                            "pixelCount":  344681
+                        }
+                    ]
+    },
+    {
+        "sourceFile":  "Mossy - MossyHills.png",
+        "sourceWidth":  2048,
+        "sourceHeight":  2048,
+        "objectCount":  7,
+        "minPixels":  180,
+        "minWidth":  16,
+        "minHeight":  12,
+        "mergeGap":  14,
+        "padding":  4,
+        "maskMode":  0,
+        "ignoreDarkThreshold":  0,
+        "outputDirectory":  "C:\\Users\\sean\\Desktop\\CODE\\iTECHS\\Frontend\\assets\\2d_platform\\Mossy Tileset\\processed\\mossy-mossyhills",
+        "objects":  [
+                        {
+                            "fileName":  "mossy-mossyhills-object-001.png",
+                            "x":  685,
+                            "y":  33,
+                            "width":  1165,
+                            "height":  496,
+                            "pixelCount":  406407
+                        },
+                        {
+                            "fileName":  "mossy-mossyhills-object-002.png",
+                            "x":  132,
+                            "y":  78,
+                            "width":  266,
+                            "height":  327,
+                            "pixelCount":  59413
+                        },
+                        {
+                            "fileName":  "mossy-mossyhills-object-003.png",
+                            "x":  64,
+                            "y":  569,
+                            "width":  389,
+                            "height":  378,
+                            "pixelCount":  109121
+                        },
+                        {
+                            "fileName":  "mossy-mossyhills-object-004.png",
+                            "x":  642,
+                            "y":  611,
+                            "width":  1249,
+                            "height":  867,
+                            "pixelCount":  705821
+                        },
+                        {
+                            "fileName":  "mossy-mossyhills-object-005.png",
+                            "x":  129,
+                            "y":  1137,
+                            "width":  292,
+                            "height":  284,
+                            "pixelCount":  51935
+                        },
+                        {
+                            "fileName":  "mossy-mossyhills-object-006.png",
+                            "x":  58,
+                            "y":  1505,
+                            "width":  1334,
+                            "height":  460,
+                            "pixelCount":  401619
+                        },
+                        {
+                            "fileName":  "mossy-mossyhills-object-007.png",
+                            "x":  1452,
+                            "y":  1576,
+                            "width":  542,
+                            "height":  433,
+                            "pixelCount":  179330
+                        }
+                    ]
+    },
+    {
+        "sourceFile":  "Mossy - TileSet.png",
+        "sourceWidth":  3584,
+        "sourceHeight":  3584,
+        "objectCount":  31,
+        "minPixels":  120,
+        "minWidth":  10,
+        "minHeight":  10,
+        "mergeGap":  8,
+        "padding":  2,
+        "maskMode":  1,
+        "ignoreDarkThreshold":  36,
+        "outputDirectory":  "C:\\Users\\sean\\Desktop\\CODE\\iTECHS\\Frontend\\assets\\2d_platform\\Mossy Tileset\\processed\\mossy-tileset",
+        "objects":  [
+                        {
+                            "fileName":  "mossy-tileset-object-001.png",
+                            "x":  3070,
+                            "y":  0,
+                            "width":  147,
+                            "height":  154,
+                            "pixelCount":  9708
+                        },
+                        {
+                            "fileName":  "mossy-tileset-object-002.png",
+                            "x":  3405,
+                            "y":  0,
+                            "width":  179,
+                            "height":  178,
+                            "pixelCount":  12037
+                        },
+                        {
+                            "fileName":  "mossy-tileset-object-003.png",
+                            "x":  33,
+                            "y":  31,
+                            "width":  1471,
+                            "height":  1473,
+                            "pixelCount":  414720
+                        },
+                        {
+                            "fileName":  "mossy-tileset-object-004.png",
+                            "x":  1569,
+                            "y":  31,
+                            "width":  447,
+                            "height":  1450,
+                            "pixelCount":  237305
+                        },
+                        {
+                            "fileName":  "mossy-tileset-object-005.png",
+                            "x":  2381,
+                            "y":  309,
+                            "width":  357,
+                            "height":  381,
+                            "pixelCount":  51555
+                        },
+                        {
+                            "fileName":  "mossy-tileset-object-006.png",
+                            "x":  3070,
+                            "y":  510,
+                            "width":  147,
+                            "height":  156,
+                            "pixelCount":  9708
+                        },
+                        {
+                            "fileName":  "mossy-tileset-object-007.png",
+                            "x":  3070,
+                            "y":  853,
+                            "width":  180,
+                            "height":  173,
+                            "pixelCount":  13126
+                        },
+                        {
+                            "fileName":  "mossy-tileset-object-008.png",
+                            "x":  2046,
+                            "y":  1022,
+                            "width":  147,
+                            "height":  156,
+                            "pixelCount":  9708
+                        },
+                        {
+                            "fileName":  "mossy-tileset-object-009.png",
+                            "x":  2381,
+                            "y":  1022,
+                            "width":  324,
+                            "height":  180,
+                            "pixelCount":  21745
+                        },
+                        {
+                            "fileName":  "mossy-tileset-object-010.png",
+                            "x":  3405,
+                            "y":  1022,
+                            "width":  179,
+                            "height":  180,
+                            "pixelCount":  12037
+                        },
+                        {
+                            "fileName":  "mossy-tileset-object-011.png",
+                            "x":  2381,
+                            "y":  1333,
+                            "width":  357,
+                            "height":  381,
+                            "pixelCount":  51555
+                        },
+                        {
+                            "fileName":  "mossy-tileset-object-012.png",
+                            "x":  2893,
+                            "y":  1333,
+                            "width":  181,
+                            "height":  381,
+                            "pixelCount":  28721
+                        },
+                        {
+                            "fileName":  "mossy-tileset-object-013.png",
+                            "x":  3429,
+                            "y":  1333,
+                            "width":  155,
+                            "height":  205,
+                            "pixelCount":  16684
+                        },
+                        {
+                            "fileName":  "mossy-tileset-object-014.png",
+                            "x":  246,
+                            "y":  1567,
+                            "width":  1046,
+                            "height":  449,
+                            "pixelCount":  191000
+                        },
+                        {
+                            "fileName":  "mossy-tileset-object-015.png",
+                            "x":  1549,
+                            "y":  1569,
+                            "width":  493,
+                            "height":  424,
+                            "pixelCount":  92376
+                        },
+                        {
+                            "fileName":  "mossy-tileset-object-016.png",
+                            "x":  2405,
+                            "y":  1845,
+                            "width":  333,
+                            "height":  205,
+                            "pixelCount":  29810
+                        },
+                        {
+                            "fileName":  "mossy-tileset-object-017.png",
+                            "x":  3429,
+                            "y":  1845,
+                            "width":  155,
+                            "height":  205,
+                            "pixelCount":  16684
+                        },
+                        {
+                            "fileName":  "mossy-tileset-object-018.png",
+                            "x":  2046,
+                            "y":  1877,
+                            "width":  180,
+                            "height":  173,
+                            "pixelCount":  13126
+                        },
+                        {
+                            "fileName":  "mossy-tileset-object-019.png",
+                            "x":  3070,
+                            "y":  1877,
+                            "width":  180,
+                            "height":  173,
+                            "pixelCount":  13126
+                        },
+                        {
+                            "fileName":  "mossy-tileset-object-020.png",
+                            "x":  33,
+                            "y":  2046,
+                            "width":  149,
+                            "height":  1028,
+                            "pixelCount":  79302
+                        },
+                        {
+                            "fileName":  "mossy-tileset-object-021.png",
+                            "x":  843,
+                            "y":  2046,
+                            "width":  149,
+                            "height":  1028,
+                            "pixelCount":  82460
+                        },
+                        {
+                            "fileName":  "mossy-tileset-object-022.png",
+                            "x":  1022,
+                            "y":  2079,
+                            "width":  1028,
+                            "height":  149,
+                            "pixelCount":  84724
+                        },
+                        {
+                            "fileName":  "mossy-tileset-object-023.png",
+                            "x":  2081,
+                            "y":  2079,
+                            "width":  1471,
+                            "height":  1473,
+                            "pixelCount":  620940
+                        },
+                        {
+                            "fileName":  "mossy-tileset-object-024.png",
+                            "x":  333,
+                            "y":  2357,
+                            "width":  357,
+                            "height":  381,
+                            "pixelCount":  51555
+                        },
+                        {
+                            "fileName":  "mossy-tileset-object-025.png",
+                            "x":  1357,
+                            "y":  2357,
+                            "width":  357,
+                            "height":  381,
+                            "pixelCount":  51555
+                        },
+                        {
+                            "fileName":  "mossy-tileset-object-026.png",
+                            "x":  1022,
+                            "y":  2854,
+                            "width":  1028,
+                            "height":  186,
+                            "pixelCount":  94254
+                        },
+                        {
+                            "fileName":  "mossy-tileset-object-027.png",
+                            "x":  1357,
+                            "y":  3070,
+                            "width":  324,
+                            "height":  180,
+                            "pixelCount":  21745
+                        },
+                        {
+                            "fileName":  "mossy-tileset-object-028.png",
+                            "x":  77,
+                            "y":  3125,
+                            "width":  357,
+                            "height":  381,
+                            "pixelCount":  51555
+                        },
+                        {
+                            "fileName":  "mossy-tileset-object-029.png",
+                            "x":  590,
+                            "y":  3150,
+                            "width":  357,
+                            "height":  381,
+                            "pixelCount":  51555
+                        },
+                        {
+                            "fileName":  "mossy-tileset-object-030.png",
+                            "x":  1893,
+                            "y":  3381,
+                            "width":  157,
+                            "height":  203,
+                            "pixelCount":  16684
+                        },
+                        {
+                            "fileName":  "mossy-tileset-object-031.png",
+                            "x":  1022,
+                            "y":  3413,
+                            "width":  180,
+                            "height":  171,
+                            "pixelCount":  13126
+                        }
+                    ]
+    }
+]

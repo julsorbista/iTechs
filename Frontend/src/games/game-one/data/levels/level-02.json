@@ -1,0 +1,380 @@
+{
+  "id": "game-one-level-02",
+  "gameType": "GAME_ONE",
+  "levelNumber": 2,
+  "title": "Canopy Crossfire",
+  "subtitle": "Question-Locked Paths and Projectile Timing",
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "questions": [
+    {
+      "id": "ram-question",
+      "prompt": "What does RAM stand for?",
+      "choices": [
+        "Random Access Memory",
+        "Read Access Module",
+        "Remote Application Manager",
+        "Rapid Action Memory"
+      ],
+      "answerIndex": 0,
+      "successText": "Correct. The bridge rose over the shot lane.",
+      "failureText": "Not yet. Touch the villain again and try another answer."
+    },
+    {
+      "id": "input-question",
+      "prompt": "Which device is mainly used to type letters and numbers into a computer?",
+      "choices": [
+        "Monitor",
+        "Keyboard",
+        "Speaker",
+        "Printer"
+      ],
+      "answerIndex": 1,
+      "successText": "Correct. The climb path is now open.",
+      "failureText": "That answer did not open the route. Try the villain again."
+    },
+    {
+      "id": "os-question",
+      "prompt": "Which software manages the computer's hardware and lets programs run?",
+      "choices": [
+        "Operating system",
+        "Mouse driver",
+        "Web browser",
+        "Photo editor"
+      ],
+      "answerIndex": 0,
+      "successText": "Correct. The safer upper route is now open.",
+      "failureText": "Not quite. Touch the villain again to retry the question."
+    },
+    {
+      "id": "storage-question",
+      "prompt": "Which device is used for long-term file storage?",
+      "choices": [
+        "RAM only",
+        "Monitor",
+        "Hard drive or SSD",
+        "Keyboard"
+      ],
+      "answerIndex": 2,
+      "successText": "Correct. The exit portal is unlocked.",
+      "failureText": "That did not unlock the portal. Try the villain again."
+    }
+  ],
+  "rooms": [
+    {
+      "id": "room-1",
+      "backgroundKey": "tutorialGrove",
+      "objective": "You can scout ahead or climb to the statue, but the path only opens after the question is answered.",
+      "postUnlockObjective": "The bridge is up. Cross the lane, avoid the shots, and reach the portal.",
+      "spawn": { "x": 120, "y": 560 },
+      "platforms": [
+        { "id": "left-floor", "x": 360, "y": 684, "width": 720, "bodyHeight": 72, "textureKey": "stone" },
+        { "id": "right-floor", "x": 1070, "y": 684, "width": 420, "bodyHeight": 72, "textureKey": "stone" },
+        { "id": "statue-step-1", "x": 250, "y": 612, "width": 140, "bodyHeight": 24, "textureKey": "stone" },
+        { "id": "statue-step-2", "x": 380, "y": 540, "width": 140, "bodyHeight": 24, "textureKey": "grass" },
+        { "id": "statue-ledge", "x": 520, "y": 468, "width": 240, "bodyHeight": 24, "textureKey": "wood" },
+        { "id": "caster-perch", "x": 930, "y": 612, "width": 180, "bodyHeight": 24, "textureKey": "wood" }
+      ],
+      "unlockPlatforms": [
+        {
+          "id": "bridge-1",
+          "x": 790,
+          "y": 620,
+          "width": 180,
+          "bodyHeight": 24,
+          "textureKey": "grass",
+          "lockedByQuestionId": "ram-question",
+          "startsHidden": true
+        }
+      ],
+      "barriers": [],
+      "coins": [
+        { "id": "coin-1", "x": 520, "y": 418 },
+        { "id": "coin-2", "x": 790, "y": 570 },
+        { "id": "coin-3", "x": 1070, "y": 632 }
+      ],
+      "ghosts": [],
+      "projectileEnemies": [
+        {
+          "id": "caster-1",
+          "enemyType": "elemental",
+          "x": 930,
+          "y": 555,
+          "fireDirection": "LEFT",
+          "fireIntervalMs": 1750,
+          "projectileSpeed": 270,
+          "projectileLifetimeMs": 2500,
+          "initialDelayMs": 1100
+        }
+      ],
+      "villain": {
+        "x": 520,
+        "y": 402,
+        "questionId": "ram-question"
+      },
+      "portal": {
+        "x": 1150,
+        "y": 556,
+        "locked": false,
+        "targetRoomId": "room-2"
+      }
+    },
+    {
+      "id": "room-2",
+      "backgroundKey": "swampTrail",
+      "objective": "Answer the question to reveal the climb and remove the gate to the upper route.",
+      "postUnlockObjective": "The climb is ready. Use the new platforms, avoid the shots, and reach the portal above.",
+      "spawn": { "x": 120, "y": 560 },
+      "platforms": [
+        { "id": "floor", "x": 640, "y": 684, "width": 1280, "bodyHeight": 72, "textureKey": "grass" },
+        { "id": "villain-ledge", "x": 260, "y": 556, "width": 220, "bodyHeight": 24, "textureKey": "wood" },
+        { "id": "low-caster-perch", "x": 970, "y": 610, "width": 200, "bodyHeight": 24, "textureKey": "stone" },
+        { "id": "upper-caster-perch", "x": 1060, "y": 414, "width": 220, "bodyHeight": 24, "textureKey": "stone" },
+        { "id": "portal-landing", "x": 1080, "y": 350, "width": 300, "bodyHeight": 24, "textureKey": "wood" }
+      ],
+      "unlockPlatforms": [
+        {
+          "id": "step-1",
+          "x": 510,
+          "y": 560,
+          "width": 170,
+          "bodyHeight": 24,
+          "textureKey": "grass",
+          "lockedByQuestionId": "input-question",
+          "startsHidden": true
+        },
+        {
+          "id": "step-2",
+          "x": 695,
+          "y": 478,
+          "width": 170,
+          "bodyHeight": 24,
+          "textureKey": "grass",
+          "lockedByQuestionId": "input-question",
+          "startsHidden": true
+        },
+        {
+          "id": "step-3",
+          "x": 880,
+          "y": 396,
+          "width": 170,
+          "bodyHeight": 24,
+          "textureKey": "grass",
+          "lockedByQuestionId": "input-question",
+          "startsHidden": true
+        }
+      ],
+      "barriers": [
+        {
+          "id": "climb-gate",
+          "x": 805,
+          "y": 520,
+          "width": 74,
+          "height": 184,
+          "bodyHeight": 176,
+          "textureKey": "stone",
+          "lockedByQuestionId": "input-question",
+          "unlockBehavior": "drop"
+        }
+      ],
+      "coins": [
+        { "id": "coin-4", "x": 260, "y": 506 },
+        { "id": "coin-5", "x": 695, "y": 428 },
+        { "id": "coin-6", "x": 1080, "y": 300 }
+      ],
+      "ghosts": [],
+      "projectileEnemies": [
+        {
+          "id": "caster-2",
+          "enemyType": "elemental",
+          "x": 970,
+          "y": 553,
+          "fireDirection": "LEFT",
+          "fireIntervalMs": 1700,
+          "projectileSpeed": 280,
+          "projectileLifetimeMs": 2600,
+          "initialDelayMs": 900
+        },
+        {
+          "id": "caster-3",
+          "enemyType": "elemental",
+          "x": 1060,
+          "y": 357,
+          "fireDirection": "LEFT",
+          "fireIntervalMs": 2000,
+          "projectileSpeed": 300,
+          "projectileLifetimeMs": 2600,
+          "initialDelayMs": 1500
+        }
+      ],
+      "villain": {
+        "x": 260,
+        "y": 490,
+        "questionId": "input-question"
+      },
+      "portal": {
+        "x": 1145,
+        "y": 274,
+        "locked": false,
+        "targetRoomId": "room-3"
+      }
+    },
+    {
+      "id": "room-3",
+      "backgroundKey": "swampTrail",
+      "objective": "Answer the question to open the safer upper route while hazards remain active below.",
+      "postUnlockObjective": "The upper route is open. Climb above the ghost and move past the shooter to the portal.",
+      "spawn": { "x": 120, "y": 560 },
+      "platforms": [
+        { "id": "floor", "x": 640, "y": 684, "width": 1280, "bodyHeight": 72, "textureKey": "wood" },
+        { "id": "villain-ledge", "x": 280, "y": 548, "width": 220, "bodyHeight": 24, "textureKey": "grass" },
+        { "id": "caster-perch", "x": 990, "y": 520, "width": 220, "bodyHeight": 24, "textureKey": "stone" },
+        { "id": "portal-landing", "x": 1110, "y": 350, "width": 280, "bodyHeight": 24, "textureKey": "wood" }
+      ],
+      "unlockPlatforms": [
+        {
+          "id": "upper-step-1",
+          "x": 520,
+          "y": 472,
+          "width": 180,
+          "bodyHeight": 24,
+          "textureKey": "grass",
+          "lockedByQuestionId": "os-question",
+          "startsHidden": true
+        },
+        {
+          "id": "upper-step-2",
+          "x": 760,
+          "y": 390,
+          "width": 180,
+          "bodyHeight": 24,
+          "textureKey": "stone",
+          "lockedByQuestionId": "os-question",
+          "startsHidden": true
+        },
+        {
+          "id": "upper-step-3",
+          "x": 970,
+          "y": 320,
+          "width": 180,
+          "bodyHeight": 24,
+          "textureKey": "wood",
+          "lockedByQuestionId": "os-question",
+          "startsHidden": true
+        }
+      ],
+      "barriers": [
+        {
+          "id": "upper-route-gate",
+          "x": 430,
+          "y": 516,
+          "width": 72,
+          "height": 176,
+          "bodyHeight": 168,
+          "textureKey": "wood",
+          "lockedByQuestionId": "os-question",
+          "unlockBehavior": "drop"
+        }
+      ],
+      "coins": [
+        { "id": "coin-7", "x": 280, "y": 498 },
+        { "id": "coin-8", "x": 760, "y": 340 },
+        { "id": "coin-9", "x": 1110, "y": 300 }
+      ],
+      "ghosts": [
+        {
+          "id": "ghost-1",
+          "x": 690,
+          "y": 592,
+          "patrolDistance": 250,
+          "speed": 84
+        }
+      ],
+      "projectileEnemies": [
+        {
+          "id": "caster-4",
+          "enemyType": "elemental",
+          "x": 990,
+          "y": 463,
+          "fireDirection": "LEFT",
+          "fireIntervalMs": 1800,
+          "projectileSpeed": 295,
+          "projectileLifetimeMs": 2500,
+          "initialDelayMs": 1200
+        }
+      ],
+      "villain": {
+        "x": 280,
+        "y": 482,
+        "questionId": "os-question"
+      },
+      "portal": {
+        "x": 1145,
+        "y": 274,
+        "locked": false,
+        "targetRoomId": "room-4"
+      }
+    },
+    {
+      "id": "room-4",
+      "backgroundKey": "ruinsGate",
+      "objective": "Reach the villain, answer correctly, then time the last run to the exit portal.",
+      "postUnlockObjective": "The portal is unlocked. Move through the final crossfire and clear the level.",
+      "spawn": { "x": 120, "y": 560 },
+      "platforms": [
+        { "id": "floor", "x": 640, "y": 684, "width": 1280, "bodyHeight": 72, "textureKey": "stone" },
+        { "id": "cover-1", "x": 410, "y": 596, "width": 180, "bodyHeight": 24, "textureKey": "wood" },
+        { "id": "villain-ledge", "x": 660, "y": 508, "width": 220, "bodyHeight": 24, "textureKey": "grass" },
+        { "id": "cover-2", "x": 870, "y": 452, "width": 180, "bodyHeight": 24, "textureKey": "wood" },
+        { "id": "low-caster-perch", "x": 990, "y": 612, "width": 180, "bodyHeight": 24, "textureKey": "stone" },
+        { "id": "high-caster-perch", "x": 1080, "y": 414, "width": 200, "bodyHeight": 24, "textureKey": "stone" }
+      ],
+      "unlockPlatforms": [],
+      "barriers": [],
+      "coins": [
+        { "id": "coin-10", "x": 410, "y": 546 },
+        { "id": "coin-11", "x": 660, "y": 458 },
+        { "id": "coin-12", "x": 1080, "y": 364 }
+      ],
+      "ghosts": [],
+      "projectileEnemies": [
+        {
+          "id": "caster-5",
+          "enemyType": "elemental",
+          "x": 990,
+          "y": 555,
+          "fireDirection": "LEFT",
+          "fireIntervalMs": 1700,
+          "projectileSpeed": 305,
+          "projectileLifetimeMs": 2550,
+          "initialDelayMs": 900
+        },
+        {
+          "id": "caster-6",
+          "enemyType": "elemental",
+          "x": 1080,
+          "y": 357,
+          "fireDirection": "LEFT",
+          "fireIntervalMs": 2050,
+          "projectileSpeed": 310,
+          "projectileLifetimeMs": 2550,
+          "initialDelayMs": 1450
+        }
+      ],
+      "villain": {
+        "x": 660,
+        "y": 442,
+        "questionId": "storage-question"
+      },
+      "portal": {
+        "x": 1150,
+        "y": 556,
+        "locked": true,
+        "endsLevel": true,
+        "questionId": "storage-question"
+      }
+    }
+  ]
+}

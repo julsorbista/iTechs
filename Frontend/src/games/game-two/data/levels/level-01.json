@@ -1,0 +1,97 @@
+{
+  "id": "game-two-level-01",
+  "gameType": "GAME_TWO",
+  "levelNumber": 1,
+  "title": "Motherboard Match",
+  "subtitle": "Drag each part to the correct slot",
+  "objective": "Place CPU, RAM, and GPU in their matching motherboard slots.",
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "board": {
+    "sliceKey": "motherboard",
+    "renderWidth": 560,
+    "renderHeight": 560
+  },
+  "parts": [
+    {
+      "id": "cpu",
+      "label": "CPU",
+      "sliceKey": "cpu",
+      "info": "CPU - Executes instructions and controls overall processing tasks.",
+      "question": {
+        "prompt": "Which component is mainly responsible for executing program instructions?",
+        "options": [
+          { "id": "a", "label": "CPU" },
+          { "id": "b", "label": "RAM" },
+          { "id": "c", "label": "GPU" },
+          { "id": "d", "label": "Power Supply" }
+        ],
+        "correctOptionId": "a"
+      }
+    },
+    {
+      "id": "ram",
+      "label": "RAM",
+      "sliceKey": "ram",
+      "placedRotation": 90,
+      "info": "RAM - Stores temporary working data used by active programs.",
+      "question": {
+        "prompt": "Which component stores temporary data for apps that are currently running?",
+        "options": [
+          { "id": "a", "label": "SSD" },
+          { "id": "b", "label": "RAM" },
+          { "id": "c", "label": "CPU Cooler" },
+          { "id": "d", "label": "Motherboard Battery" }
+        ],
+        "correctOptionId": "b"
+      }
+    },
+    {
+      "id": "gpu",
+      "label": "GPU",
+      "sliceKey": "gpu",
+      "info": "GPU - Handles image rendering and graphics-intensive workloads.",
+      "question": {
+        "prompt": "Which component is built to render graphics and visual output faster?",
+        "options": [
+          { "id": "a", "label": "GPU" },
+          { "id": "b", "label": "RAM" },
+          { "id": "c", "label": "CPU Fan" },
+          { "id": "d", "label": "Network Card" }
+        ],
+        "correctOptionId": "a"
+      }
+    }
+  ],
+  "slots": [
+    {
+      "id": "cpu-slot",
+      "label": "CPU Socket",
+      "accepts": "cpu",
+      "x": 50.5,
+      "y": 38.5,
+      "width": 27,
+      "height": 27
+    },
+    {
+      "id": "ram-slot",
+      "label": "RAM Slot",
+      "accepts": "ram",
+      "x": 83.5,
+      "y": 35.5,
+      "width": 18,
+      "height": 60
+    },
+    {
+      "id": "gpu-slot",
+      "label": "PCIe x16 Slot",
+      "accepts": "gpu",
+      "x": 45,
+      "y": 71,
+      "width": 56,
+      "height": 24
+    }
+  ]
+}

@@ -1,0 +1,233 @@
+{
+  "id": "game-one-level-03",
+  "gameType": "GAME_ONE",
+  "levelNumber": 3,
+  "title": "Skyforge Siege",
+  "subtitle": "Hunter Drones and Sentinel Pressure",
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "questions": [
+    {
+      "id": "binary-question",
+      "prompt": "Which number system uses only 0 and 1?",
+      "choices": [
+        "Decimal",
+        "Hexadecimal",
+        "Binary",
+        "Octal"
+      ],
+      "answerIndex": 2,
+      "successText": "Correct. The upper lane is now active.",
+      "failureText": "Not yet. Retry the statue to open the lane."
+    },
+    {
+      "id": "network-question",
+      "prompt": "What is the main purpose of a router in a network?",
+      "choices": [
+        "To cool the computer",
+        "To direct traffic between networks",
+        "To increase monitor brightness",
+        "To type commands"
+      ],
+      "answerIndex": 1,
+      "successText": "Correct. The final portal lock is released.",
+      "failureText": "Incorrect. Touch the statue and try again."
+    }
+  ],
+  "rooms": [
+    {
+      "id": "room-1",
+      "backgroundKey": "tutorialGrove",
+      "objective": "Advance through hunter drone patrols and reach the relay portal.",
+      "spawn": { "x": 140, "y": 560 },
+      "platforms": [
+        { "id": "floor", "x": 640, "y": 684, "width": 1280, "bodyHeight": 72, "textureKey": "grass" },
+        { "id": "left-ledge", "x": 360, "y": 542, "width": 220, "bodyHeight": 24, "textureKey": "stone" },
+        { "id": "mid-ledge", "x": 660, "y": 458, "width": 240, "bodyHeight": 24, "textureKey": "wood" },
+        { "id": "right-ledge", "x": 980, "y": 382, "width": 220, "bodyHeight": 24, "textureKey": "stone" }
+      ],
+      "coins": [
+        { "id": "coin-1", "x": 360, "y": 492 },
+        { "id": "coin-2", "x": 660, "y": 408 },
+        { "id": "coin-3", "x": 980, "y": 332 }
+      ],
+      "ghosts": [
+        {
+          "id": "ghost-1",
+          "x": 540,
+          "y": 594,
+          "patrolDistance": 210,
+          "speed": 82
+        }
+      ],
+      "projectileEnemies": [
+        {
+          "id": "hunter-1",
+          "enemyType": "hunter",
+          "x": 840,
+          "y": 404,
+          "fireDirection": "LEFT",
+          "fireIntervalMs": 1650,
+          "projectileSpeed": 300,
+          "projectileLifetimeMs": 2200,
+          "initialDelayMs": 900
+        }
+      ],
+      "portal": {
+        "x": 1148,
+        "y": 556,
+        "locked": false,
+        "targetRoomId": "room-2"
+      }
+    },
+    {
+      "id": "room-2",
+      "backgroundKey": "swampTrail",
+      "objective": "Answer the statue to unlock the upper bridge while under ranged pressure.",
+      "postUnlockObjective": "Bridge is online. Move above the lane and take the portal.",
+      "spawn": { "x": 140, "y": 560 },
+      "platforms": [
+        { "id": "floor", "x": 640, "y": 684, "width": 1280, "bodyHeight": 72, "textureKey": "stone" },
+        { "id": "statue-ledge", "x": 280, "y": 548, "width": 220, "bodyHeight": 24, "textureKey": "grass" },
+        { "id": "caster-perch", "x": 1000, "y": 598, "width": 220, "bodyHeight": 24, "textureKey": "wood" },
+        { "id": "portal-ledge", "x": 1030, "y": 334, "width": 260, "bodyHeight": 24, "textureKey": "wood" }
+      ],
+      "unlockPlatforms": [
+        {
+          "id": "bridge-1",
+          "x": 520,
+          "y": 520,
+          "width": 180,
+          "bodyHeight": 24,
+          "textureKey": "grass",
+          "lockedByQuestionId": "binary-question",
+          "startsHidden": true
+        },
+        {
+          "id": "bridge-2",
+          "x": 735,
+          "y": 438,
+          "width": 180,
+          "bodyHeight": 24,
+          "textureKey": "stone",
+          "lockedByQuestionId": "binary-question",
+          "startsHidden": true
+        },
+        {
+          "id": "bridge-3",
+          "x": 930,
+          "y": 360,
+          "width": 180,
+          "bodyHeight": 24,
+          "textureKey": "wood",
+          "lockedByQuestionId": "binary-question",
+          "startsHidden": true
+        }
+      ],
+      "barriers": [
+        {
+          "id": "climb-lock",
+          "x": 430,
+          "y": 512,
+          "width": 70,
+          "height": 180,
+          "bodyHeight": 170,
+          "textureKey": "stone",
+          "lockedByQuestionId": "binary-question",
+          "unlockBehavior": "drop"
+        }
+      ],
+      "coins": [
+        { "id": "coin-4", "x": 280, "y": 498 },
+        { "id": "coin-5", "x": 735, "y": 388 },
+        { "id": "coin-6", "x": 1030, "y": 284 }
+      ],
+      "ghosts": [],
+      "projectileEnemies": [
+        {
+          "id": "caster-1",
+          "enemyType": "elemental",
+          "x": 1000,
+          "y": 541,
+          "fireDirection": "LEFT",
+          "fireIntervalMs": 1700,
+          "projectileSpeed": 295,
+          "projectileLifetimeMs": 2400,
+          "initialDelayMs": 850
+        },
+        {
+          "id": "hunter-2",
+          "enemyType": "hunter",
+          "x": 850,
+          "y": 328,
+          "fireDirection": "LEFT",
+          "fireIntervalMs": 1600,
+          "projectileSpeed": 310,
+          "projectileLifetimeMs": 2200,
+          "initialDelayMs": 1100
+        }
+      ],
+      "villain": {
+        "x": 280,
+        "y": 492,
+        "appearance": "STATUE",
+        "interactionLabel": "statue",
+        "questionId": "binary-question"
+      },
+      "portal": {
+        "x": 1148,
+        "y": 258,
+        "locked": false,
+        "targetRoomId": "room-3"
+      }
+    },
+    {
+      "id": "room-3",
+      "backgroundKey": "ruinsGate",
+      "objective": "Damage the sentinel and answer the final statue to release the ending portal.",
+      "spawn": { "x": 140, "y": 560 },
+      "platforms": [
+        { "id": "floor", "x": 640, "y": 684, "width": 1280, "bodyHeight": 72, "textureKey": "wood" },
+        { "id": "left-cover", "x": 350, "y": 600, "width": 190, "bodyHeight": 24, "textureKey": "stone" },
+        { "id": "boss-stand", "x": 860, "y": 478, "width": 280, "bodyHeight": 24, "textureKey": "stone" },
+        { "id": "statue-stand", "x": 540, "y": 530, "width": 220, "bodyHeight": 24, "textureKey": "grass" }
+      ],
+      "coins": [
+        { "id": "coin-7", "x": 350, "y": 550 },
+        { "id": "coin-8", "x": 540, "y": 480 },
+        { "id": "coin-9", "x": 860, "y": 428 }
+      ],
+      "ghosts": [],
+      "projectileEnemies": [
+        {
+          "id": "boss-1",
+          "enemyType": "boss",
+          "x": 860,
+          "y": 350,
+          "fireDirection": "LEFT",
+          "fireIntervalMs": 1450,
+          "projectileSpeed": 335,
+          "projectileLifetimeMs": 2800,
+          "initialDelayMs": 1200,
+          "hitPoints": 6
+        }
+      ],
+      "villain": {
+        "x": 540,
+        "y": 474,
+        "appearance": "STATUE",
+        "interactionLabel": "statue",
+        "questionId": "network-question"
+      },
+      "portal": {
+        "x": 1148,
+        "y": 556,
+        "locked": true,
+        "endsLevel": true,
+        "questionId": "network-question"
+      }
+    }
+  ]
+}

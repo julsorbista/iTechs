@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1536" height="192" viewBox="0 0 1536 192">
+  <defs>
+    <linearGradient id="bossArmor" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fca5a5" />
+      <stop offset="45%" stop-color="#fb7185" />
+      <stop offset="100%" stop-color="#881337" />
+    </linearGradient>
+    <radialGradient id="bossCore" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#fef3c7" />
+      <stop offset="35%" stop-color="#f97316" />
+      <stop offset="100%" stop-color="#7f1d1d" />
+    </radialGradient>
+  </defs>
+
+  <g transform="translate(0,0)">
+    <rect x="32" y="26" width="128" height="132" rx="28" fill="url(#bossArmor)" stroke="#fecaca" stroke-width="3" />
+    <circle cx="96" cy="84" r="34" fill="url(#bossCore)" />
+    <rect x="12" y="72" width="28" height="16" rx="6" fill="#fb7185" />
+    <rect x="152" y="72" width="28" height="16" rx="6" fill="#fb7185" />
+  </g>
+
+  <g transform="translate(192,0)">
+    <rect x="32" y="22" width="128" height="132" rx="28" fill="url(#bossArmor)" stroke="#fecaca" stroke-width="3" />
+    <circle cx="96" cy="80" r="34" fill="url(#bossCore)" />
+    <rect x="8" y="62" width="30" height="16" rx="6" fill="#fb7185" />
+    <rect x="154" y="62" width="30" height="16" rx="6" fill="#fb7185" />
+  </g>
+
+  <g transform="translate(384,0)">
+    <rect x="32" y="18" width="128" height="132" rx="28" fill="url(#bossArmor)" stroke="#fecaca" stroke-width="3" />
+    <circle cx="96" cy="76" r="34" fill="url(#bossCore)" />
+    <rect x="4" y="56" width="30" height="16" rx="6" fill="#fb7185" />
+    <rect x="158" y="56" width="30" height="16" rx="6" fill="#fb7185" />
+  </g>
+
+  <g transform="translate(576,0)">
+    <rect x="32" y="22" width="128" height="132" rx="28" fill="url(#bossArmor)" stroke="#fecaca" stroke-width="3" />
+    <circle cx="96" cy="80" r="34" fill="url(#bossCore)" />
+    <rect x="8" y="62" width="30" height="16" rx="6" fill="#fb7185" />
+    <rect x="154" y="62" width="30" height="16" rx="6" fill="#fb7185" />
+  </g>
+
+  <g transform="translate(768,0)">
+    <rect x="32" y="26" width="128" height="132" rx="28" fill="url(#bossArmor)" stroke="#fecaca" stroke-width="3" />
+    <circle cx="96" cy="84" r="34" fill="url(#bossCore)" />
+    <rect x="12" y="72" width="28" height="16" rx="6" fill="#fb7185" />
+    <rect x="152" y="72" width="28" height="16" rx="6" fill="#fb7185" />
+  </g>
+
+  <g transform="translate(960,0)">
+    <rect x="32" y="30" width="128" height="132" rx="28" fill="url(#bossArmor)" stroke="#fecaca" stroke-width="3" />
+    <circle cx="96" cy="88" r="34" fill="url(#bossCore)" />
+    <rect x="16" y="78" width="28" height="16" rx="6" fill="#fb7185" />
+    <rect x="148" y="78" width="28" height="16" rx="6" fill="#fb7185" />
+  </g>
+
+  <g transform="translate(1152,0)">
+    <rect x="32" y="34" width="128" height="132" rx="28" fill="url(#bossArmor)" stroke="#fecaca" stroke-width="3" />
+    <circle cx="96" cy="92" r="34" fill="url(#bossCore)" />
+    <rect x="20" y="84" width="26" height="16" rx="6" fill="#fb7185" />
+    <rect x="146" y="84" width="26" height="16" rx="6" fill="#fb7185" />
+  </g>
+
+  <g transform="translate(1344,0)">
+    <rect x="32" y="30" width="128" height="132" rx="28" fill="url(#bossArmor)" stroke="#fecaca" stroke-width="3" />
+    <circle cx="96" cy="88" r="34" fill="url(#bossCore)" />
+    <rect x="16" y="78" width="28" height="16" rx="6" fill="#fb7185" />
+    <rect x="148" y="78" width="28" height="16" rx="6" fill="#fb7185" />
+  </g>
+</svg>

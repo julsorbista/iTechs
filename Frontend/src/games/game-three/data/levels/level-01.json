@@ -1,0 +1,115 @@
+{
+  "id": "game-three-level-01",
+  "gameType": "GAME_THREE",
+  "levelNumber": 1,
+  "title": "Signal Sync",
+  "subtitle": "Match cards and answer the revealed quiz",
+  "objective": "Find every matching pair. Each completed pair reveals a multiple-choice question worth one point.",
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "settings": {
+    "columns": 4,
+    "previewMs": 0,
+    "flipBackMs": 900
+  },
+  "pairs": [
+    {
+      "id": "cpu",
+      "label": "CPU",
+      "accent": "#34d399",
+      "badge": "01",
+      "question": {
+        "prompt": "Sample question for CPU. Choose the correct option.",
+        "options": [
+          { "id": "a", "label": "A" },
+          { "id": "b", "label": "B" },
+          { "id": "c", "label": "C" },
+          { "id": "d", "label": "D" }
+        ],
+        "correctOptionId": "a"
+      }
+    },
+    {
+      "id": "ram",
+      "label": "RAM",
+      "accent": "#38bdf8",
+      "badge": "02",
+      "question": {
+        "prompt": "Sample question for RAM. Choose the correct option.",
+        "options": [
+          { "id": "a", "label": "A" },
+          { "id": "b", "label": "B" },
+          { "id": "c", "label": "C" },
+          { "id": "d", "label": "D" }
+        ],
+        "correctOptionId": "a"
+      }
+    },
+    {
+      "id": "gpu",
+      "label": "GPU",
+      "accent": "#f59e0b",
+      "badge": "03",
+      "question": {
+        "prompt": "Sample question for GPU. Choose the correct option.",
+        "options": [
+          { "id": "a", "label": "A" },
+          { "id": "b", "label": "B" },
+          { "id": "c", "label": "C" },
+          { "id": "d", "label": "D" }
+        ],
+        "correctOptionId": "a"
+      }
+    },
+    {
+      "id": "bios",
+      "label": "BIOS",
+      "accent": "#fb7185",
+      "badge": "04",
+      "question": {
+        "prompt": "Sample question for BIOS. Choose the correct option.",
+        "options": [
+          { "id": "a", "label": "A" },
+          { "id": "b", "label": "B" },
+          { "id": "c", "label": "C" },
+          { "id": "d", "label": "D" }
+        ],
+        "correctOptionId": "a"
+      }
+    },
+    {
+      "id": "rom",
+      "label": "ROM",
+      "accent": "#a78bfa",
+      "badge": "05",
+      "question": {
+        "prompt": "Sample question for ROM. Choose the correct option.",
+        "options": [
+          { "id": "a", "label": "A" },
+          { "id": "b", "label": "B" },
+          { "id": "c", "label": "C" },
+          { "id": "d", "label": "D" }
+        ],
+        "correctOptionId": "a"
+      }
+    },
+    {
+      "id": "lan",
+      "label": "LAN",
+      "accent": "#22c55e",
+      "badge": "06",
+      "question": {
+        "prompt": "Sample question for LAN. Choose the correct option.",
+        "options": [
+          { "id": "a", "label": "A" },
+          { "id": "b", "label": "B" },
+          { "id": "c", "label": "C" },
+          { "id": "d", "label": "D" }
+        ],
+        "correctOptionId": "a"
+      }
+    }
+  ]
+}
